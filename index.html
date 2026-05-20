@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Primary SEO Metadata -->
+  <title>Jay Patel | Computer Programmer & Operations Specialist</title>
+  <meta name="description" content="Portfolio of Jay Patel. Discover a unique intersection of Computer Programming (Seneca Polytechnic) and high-throughput warehouse logistics, retail management, and customer success experience.">
+  <meta name="keywords" content="Jay Patel, Portfolio, Computer Programmer, Logistics Coordinator, Seneca College, Amazon Sorting, Sunshine Corp Customer Success, Toronto Developer">
+  <meta name="author" content="Jay Patel">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Jay Patel | Computer Programmer & Operations Specialist">
+  <meta property="og:description" content="Portfolio of Jay Patel, showcasing Seneca Computer Programming skills combined with high-throughput logistics, shipping coordination, and retail management.">
+  
+  <!-- Styling Foundation -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dev-mode"> <!-- Defaults to Developer Mode -->
+
+  <!-- Metropolis Dynamic Grid Overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container nav-container">
+      <a href="#" class="logo" id="navLogo">
+        <i data-lucide="terminal"></i>
+        <span>JAY<span class="logo-highlight">.PATEL</span></span>
+      </a>
+      
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- The Dynamic Lens Toggle Switcher -->
+      <div class="lens-toggle-wrapper">
+        <span class="lens-label active" id="labelDev">Dev</span>
+        <div class="toggle-btn" id="lensToggle" title="Toggle Developer / Operations Mode">
+          <div class="toggle-circle"></div>
+        </div>
+        <span class="lens-label" id="labelOps">Ops</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="hero" class="hero">
+    <div class="container hero-layout">
+      <!-- Info Col -->
+      <div class="hero-info reveal">
+        <div class="hero-tag" id="heroTag">
+          <i data-lucide="code-2"></i>
+          <span>Developer Lens Engaged</span>
+        </div>
+        <h1 class="hero-title">
+          <span class="name">Jay Patel</span>
+          <span class="title-mode" id="heroTitleMode">Computer Programmer</span>
+        </h1>
+        <p class="hero-desc" id="heroDesc">
+          Seneca Polytechnic Programming graduate specializing in Python, SQL, and database algorithms. Creating streamlined technical answers to bridge the gap between software development and complex operational systems.
+        </p>
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary" id="heroMainAction">
+            <span>Explore Projects</span>
+            <i data-lucide="arrow-right"></i>
+          </a>
+          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+        </div>
+      </div>
+      
+      <!-- Patel Terminal Col -->
+      <div class="terminal-wrapper reveal" style="transition-delay: 150ms;">
+        <div class="terminal-box">
+          <div class="terminal-header">
+            <div class="terminal-buttons">
+              <span class="t-btn red"></span>
+              <span class="t-btn yellow"></span>
+              <span class="t-btn green"></span>
+            </div>
+            <div class="terminal-title">guest@patel-terminal:~</div>
+            <div><i data-lucide="terminal" style="width: 14px; height: 14px; color: var(--text-muted);"></i></div>
+          </div>
+          
+          <div class="terminal-body" id="terminalBody">
+            <div class="terminal-log-line terminal-system-text">
+===================================================
+Welcome to Jay Patel's Interactive Terminal (v1.0.4)
+System: Seneca OS x86_64
+Available Commands: help, about, skills, contact, clear
+===================================================
+            </div>
+            <div class="terminal-log-line">Type 'help' below or click a quick tag to start.</div>
+            
+            <!-- Output Log Container -->
+            <div id="terminalOutputLog"></div>
+            
+            <!-- Dynamic Prompt Line -->
+            <div class="terminal-prompt-line">
+              <span class="terminal-prompt-sym">patel-os ~ $</span>
+              <input type="text" class="terminal-input" id="terminalInput" placeholder="type a command..." autocomplete="off" spellcheck="false">
+            </div>
+
+            <!-- Quick Suggestions Tags -->
+            <div class="terminal-suggestions">
+              <span class="terminal-chip" data-cmd="about">about</span>
+              <span class="terminal-chip" data-cmd="skills">skills</span>
+              <span class="terminal-chip" data-cmd="contact">contact</span>
+              <span class="terminal-chip" data-cmd="help">help</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-subtitle">Profile</span>
+        <h2 class="section-title">The Nexus of Tech & Operations</h2>
+        <p>Combining computer science logic with front-line high-throughput fulfillment, client account escalations, and store operations.</p>
+      </div>
+      
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <h3 id="aboutHeading">I build software that drives real-world throughput.</h3>
+          <p id="aboutTextContent">
+            With a Computer Programming Diploma from Seneca Polytechnic, I developed a strong foundation in algorithmic reasoning, database structures, and object-oriented architectures. Unlike traditional developers, I spent years leading operations at Complete Mart, managing high-volume sorting at Amazon, and coordinating courier accounts (UPS, FedEx, DHL) for Sunshine Corporation. I thrive where operational workflows meet technological automation.
+          </p>
+          <div style="margin-top: 1rem;">
+            <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" class="btn btn-secondary" style="border-radius: 50px;">
+              <i data-lucide="linkedin"></i>
+              <span>View LinkedIn Profile</span>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Stats Dashboard -->
+        <div class="about-stats reveal" style="transition-delay: 150ms;">
+          <div class="glass-card stat-card">
+            <div class="glow-accent" style="top: 10%; left: 10%;"></div>
+            <div class="stat-number" id="stat1Val">100%</div>
+            <div class="stat-label" id="stat1Lbl">SLA Compliance</div>
+          </div>
+          <div class="glass-card stat-card">
+            <div class="glow-accent" style="top: 10%; left: 10%;"></div>
+            <div class="stat-number" id="stat2Val">400+</div>
+            <div class="stat-label" id="stat2Lbl">Items/Hr Sorting</div>
+          </div>
+          <div class="glass-card stat-card">
+            <div class="glow-accent" style="top: 10%; left: 10%;"></div>
+            <div class="stat-number" id="stat3Val">500+</div>
+            <div class="stat-label" id="stat3Lbl">Shipment Disputes Solved</div>
+          </div>
+          <div class="glass-card stat-card">
+            <div class="glow-accent" style="top: 10%; left: 10%;"></div>
+            <div class="stat-number" id="stat4Val">4.0 / 4.0</div>
+            <div class="stat-label" id="stat4Lbl">Seneca Project Quality</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Matrix Section -->
+  <section id="skills" style="background: rgba(0, 0, 0, 0.15);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-subtitle">Competencies</span>
+        <h2 class="section-title">Professional Skill Matrix</h2>
+        <p>A breakdown of technical engineering capabilities paired with physical operations and customer service expertises.</p>
+      </div>
+      
+      <div class="skills-grid">
+        <!-- Category 1: Tech -->
+        <div class="glass-card skills-category reveal">
+          <div class="glow-accent"></div>
+          <div class="skills-category-header">
+            <div class="skills-category-icon">
+              <i data-lucide="binary"></i>
+            </div>
+            <h3 class="skills-category-title">Software Engineering</h3>
+          </div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Python Automation</span>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">SQL Databases & Design</span>
+                <span class="skill-pct">85%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Data Structures & Logic</span>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="80%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Web Scripting (HTML/CSS/JS)</span>
+                <span class="skill-pct">75%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Category 2: Logistics -->
+        <div class="glass-card skills-category reveal" style="transition-delay: 100ms;">
+          <div class="glow-accent"></div>
+          <div class="skills-category-header">
+            <div class="skills-category-icon">
+              <i data-lucide="truck"></i>
+            </div>
+            <h3 class="skills-category-title">Logistics & Operations</h3>
+          </div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Multi-Carrier Shipping (UPS, FedEx, DHL)</span>
+                <span class="skill-pct">95%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Inventory Lifecycle Control (500+ SKUs)</span>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Warehouse Sorting & Scanners</span>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Fleet & Rental Coordination</span>
+                <span class="skill-pct">85%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="85%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Category 3: Customer Success -->
+        <div class="glass-card skills-category reveal" style="transition-delay: 200ms;">
+          <div class="glow-accent"></div>
+          <div class="skills-category-header">
+            <div class="skills-category-icon">
+              <i data-lucide="users"></i>
+            </div>
+            <h3 class="skills-category-title">Customer Experience</h3>
+          </div>
+          <div class="skills-list">
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Account De-escalation & Disputes</span>
+                <span class="skill-pct">95%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">High-Volume Order Speed (Tim Hortons)</span>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">POS Systems & Financial Auditing</span>
+                <span class="skill-pct">90%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-info">
+                <span class="skill-name">Age-Verification Compliance</span>
+                <span class="skill-pct">95%</span>
+              </div>
+              <div class="skill-bar-outer">
+                <div class="skill-bar-inner" data-width="95%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience Timeline Section -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-subtitle">Milestones</span>
+        <h2 class="section-title">Professional Journey</h2>
+        <p>A timeline mapping out academic success along with operations positions in Canada.</p>
+      </div>
+      
+      <div class="timeline">
+        <!-- Item 1: Tim Hortons -->
+        <div class="timeline-item left reveal">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-content">
+            <span class="timeline-date">Mar 2026 – Present</span>
+            <h3 class="timeline-title">Team Member</h3>
+            <span class="timeline-org">Tim Hortons | Toronto, ON</span>
+            <p class="timeline-desc">
+              Directing customer service operations in a high-volume drive-thru. Consistently meets strict 45-second service metrics, reconciles thousands in POS transactions daily, and trains new members on front-end software systems.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Item 2: Amazon -->
+        <div class="timeline-item right reveal">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-content">
+            <span class="timeline-date">Aug 2025 – Jan 2026</span>
+            <h3 class="timeline-title">Warehouse Associate (Sorting Station)</h3>
+            <span class="timeline-org">Amazon | Toronto, ON</span>
+            <p class="timeline-desc">
+              Executed warehouse operations, sorting and routing up to 400+ units per hour using scanner guns and warehouse management software. Maintained a 99.8% audit accuracy score and coordinated team freight handling in safety-critical sectors.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Item 3: Seneca College -->
+        <div class="timeline-item left reveal">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-content">
+            <span class="timeline-date">Graduated Dec 2025</span>
+            <h3 class="timeline-title">Computer Programming Diploma</h3>
+            <span class="timeline-org">Seneca Polytechnic | Ontario, CA</span>
+            <p class="timeline-desc">
+              Completed intensive programming curriculum. Specialized in database designs, advanced data structures, algorithmic scripting, OOP concepts, and building robust, clean code architectures in Python and C++.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Item 4: Complete Mart / Sunshine Corp -->
+        <div class="timeline-item right reveal">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-content">
+            <span class="timeline-date">Dec 2023 – Mar 2026</span>
+            <h3 class="timeline-title">Customer Experience Specialist & General Manager</h3>
+            <span class="timeline-org">Sunshine Corporation / Complete Mart | Toronto, ON</span>
+            <p class="timeline-desc">
+              Spearheaded operational leadership for a retail shipping node handling DHL, FedEx, and UPS accounts. Resolved over 500 carrier disputes, negotiated custom shipping solutions, tracked a 500+ SKU database, and optimized U-Haul fleet coordination to increase lease turnovers by 15%.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Item 5: Dundas Variety Store -->
+        <div class="timeline-item left reveal">
+          <div class="timeline-dot"></div>
+          <div class="glass-card timeline-content">
+            <span class="timeline-date">Jun 2023 – Oct 2023</span>
+            <h3 class="timeline-title">Cashier & Service Associate</h3>
+            <span class="timeline-org">Dundas Variety Store | Brantford, ON</span>
+            <p class="timeline-desc">
+              Managed front-desk client experiences, operating Point-of-Sale structures and OLG terminals. Conducted strict age-restricted auditing and inventory stocking under active shifts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" style="background: rgba(0, 0, 0, 0.155);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-subtitle">Showcase</span>
+        <h2 class="section-title">Innovative Case Studies</h2>
+        <p>Explore specialized projects built to bridge digital algorithms with physical operational systems.</p>
+      </div>
+      
+      <div class="projects-grid">
+        <!-- Project 1: ATS Resume Generator -->
+        <div class="glass-card project-card reveal">
+          <div class="project-badge">Active Engine</div>
+          <div class="project-preview">
+            <div class="project-preview-icon"><i data-lucide="file-text" style="width: 48px; height: 48px;"></i></div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">ATS Master Resume Compiler</h3>
+            
+            <!-- Tech View Standard Desc -->
+            <p class="project-desc project-desc-standard">
+              A Python-based compiler that dynamically aggregates raw JSON profile schemas and parses them into perfectly formatted, ATS-compliant HTML/CSS templates, compiling them into vector PDFs using headless Chrome layers.
+            </p>
+            
+            <!-- Ops View Metrics -->
+            <div class="project-metrics">
+              <div class="metric-row">
+                <span class="metric-lbl">Target Format</span>
+                <span class="metric-val">Single Page PDF</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">Parsing Latency</span>
+                <span class="metric-val">1.2 seconds</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">Compliance Rating</span>
+                <span class="metric-val">99.2% ATS Rating</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">NOC Coverage</span>
+                <span class="metric-val">TEER 1, 2 & 3 Matching</span>
+              </div>
+            </div>
+            
+            <div class="project-tags">
+              <span class="project-tag">Python 3.11</span>
+              <span class="project-tag">HTML5/CSS3</span>
+              <span class="project-tag">Automated Pipelines</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span class="project-link">
+              <i data-lucide="terminal"></i>
+              <span>Python CLI Tool</span>
+            </span>
+            <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" class="project-link" style="color: var(--accent-primary);">
+              <span>Details</span>
+              <i data-lucide="chevron-right"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Project 2: LogiFlow Tracker -->
+        <div class="glass-card project-card reveal" style="transition-delay: 100ms;">
+          <div class="project-badge">Optimizing</div>
+          <div class="project-preview">
+            <div class="project-preview-icon"><i data-lucide="route" style="width: 48px; height: 48px;"></i></div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">LogiFlow Route Automator</h3>
+            
+            <!-- Tech View Standard Desc -->
+            <p class="project-desc project-desc-standard">
+              An algorithmic routing pipeline designed to optimize package delivery flows. Implements custom sorting algorithms to classify shipments by courier weight-threshold levels and automatically rids delivery discrepancies.
+            </p>
+            
+            <!-- Ops View Metrics -->
+            <div class="project-metrics">
+              <div class="metric-row">
+                <span class="metric-lbl">Sorting Rate</span>
+                <span class="metric-val">400+ pkgs/hr (Sim)</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">Route Savings</span>
+                <span class="metric-val">12.5% Distance Red.</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">SLA Verification</span>
+                <span class="metric-val">99.98% accuracy</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">Carriers Checked</span>
+                <span class="metric-val">UPS, FedEx, DHL</span>
+              </div>
+            </div>
+            
+            <div class="project-tags">
+              <span class="project-tag">Algorithmic Math</span>
+              <span class="project-tag">Python Scripting</span>
+              <span class="project-tag">JSON Schema</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span class="project-link">
+              <i data-lucide="cpu"></i>
+              <span>Backend Algorithm</span>
+            </span>
+            <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" class="project-link" style="color: var(--accent-primary);">
+              <span>Details</span>
+              <i data-lucide="chevron-right"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Project 3: Courier SLA Dashboard -->
+        <div class="glass-card project-card reveal" style="transition-delay: 200ms;">
+          <div class="project-badge">Simulated</div>
+          <div class="project-preview">
+            <div class="project-preview-icon"><i data-lucide="layout-dashboard" style="width: 48px; height: 48px;"></i></div>
+          </div>
+          <div class="project-content">
+            <h3 class="project-title">Sunshine SLA Monitor</h3>
+            
+            <!-- Tech View Standard Desc -->
+            <p class="project-desc project-desc-standard">
+              A responsive, high-performance logistics dashboard interface. Connects simulated API logs of delivery accounts and visualizes real-time courier fulfillment performance, tracking dispute claims dynamically.
+            </p>
+            
+            <!-- Ops View Metrics -->
+            <div class="project-metrics">
+              <div class="metric-row">
+                <span class="metric-lbl">Disputes Tracked</span>
+                <span class="metric-val">500+ Cases</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">SLA Recovery</span>
+                <span class="metric-val">98% Success</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">Data Points</span>
+                <span class="metric-val">10,000+ Trans/day</span>
+              </div>
+              <div class="metric-row">
+                <span class="metric-lbl">Negotiation Yield</span>
+                <span class="metric-val">$15,000 Saved</span>
+              </div>
+            </div>
+            
+            <div class="project-tags">
+              <span class="project-tag">Dynamic UI</span>
+              <span class="project-tag">Data Visualization</span>
+              <span class="project-tag">CSS Variables</span>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span class="project-link">
+              <i data-lucide="monitor"></i>
+              <span>Interactive UI</span>
+            </span>
+            <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" class="project-link" style="color: var(--accent-primary);">
+              <span>Details</span>
+              <i data-lucide="chevron-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-subtitle">Get in Touch</span>
+        <h2 class="section-title">Let's Collaborate</h2>
+        <p>Whether you're looking for a Transportation Logistics Coordinator or a Software Programmer with operational depth, reach out below.</p>
+      </div>
+      
+      <div class="contact-layout">
+        <!-- Details -->
+        <div class="contact-info reveal">
+          <h3>Contact Details</h3>
+          <p style="color: var(--text-secondary); line-height: 1.6;">
+            I am currently located in Toronto, ON, Canada, and am eligible to work full-time on implied status with an active PGWP application pending. Open to roles in the GTA or remote.
+          </p>
+          
+          <div class="contact-card-list">
+            <div class="contact-item">
+              <div class="contact-icon"><i data-lucide="mail"></i></div>
+              <div class="contact-details">
+                <h4>Email</h4>
+                <a href="mailto:jaynpatel08@gmail.com">jaynpatel08@gmail.com</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i data-lucide="phone"></i></div>
+              <div class="contact-details">
+                <h4>Phone</h4>
+                <a href="tel:+14379813545">437-981-3545</a>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-icon"><i data-lucide="map-pin"></i></div>
+              <div class="contact-details">
+                <h4>Location</h4>
+                <p>Toronto, Ontario, Canada</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-links">
+            <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" class="social-icon" title="LinkedIn Profile">
+              <i data-lucide="linkedin"></i>
+            </a>
+            <a href="mailto:jaynpatel08@gmail.com" class="social-icon" title="Send Email">
+              <i data-lucide="mail"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Form Card -->
+        <div class="glass-card contact-form reveal" style="transition-delay: 150ms;">
+          <div class="glow-accent" style="bottom: 10%; right: 10%;"></div>
+          
+          <form id="contactForm" onsubmit="return false;">
+            <div class="form-group-row">
+              <div class="form-group">
+                <label for="frmName">Full Name</label>
+                <input type="text" id="frmName" class="form-input" placeholder="John Doe" required>
+              </div>
+              <div class="form-group">
+                <label for="frmEmail">Email Address</label>
+                <input type="email" id="frmEmail" class="form-input" placeholder="john@example.com" required>
+              </div>
+            </div>
+            
+            <div class="form-group" style="margin-top: 1.2rem;">
+              <label for="frmSubject">Subject</label>
+              <input type="text" id="frmSubject" class="form-input" placeholder="Logistics Coordination/Software Opportunity" required>
+            </div>
+            
+            <div class="form-group" style="margin-top: 1.2rem;">
+              <label for="frmMessage">Message</label>
+              <textarea id="frmMessage" class="form-input" placeholder="Your message here..." required></textarea>
+            </div>
+            
+            <!-- Submit Notification System -->
+            <div id="formStatus" class="form-status" style="margin-top: 1rem;"></div>
+            
+            <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; justify-content: center;" id="btnSubmitForm">
+              <span>Send Message</span>
+              <i data-lucide="send"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div class="logo">
+        <i data-lucide="terminal"></i>
+        <span>JAY<span class="logo-highlight">.PATEL</span></span>
+      </div>
+      <p class="footer-copy">
+        &copy; 2026 Jay Patel. Crafted at the nexus of <span id="footerNexusWord">Software Engineering</span>. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Lucide Vector Icons Library -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Interactive Frontend Script -->
+  <script src="app.js"></script>
+</body>
+</html>
