@@ -586,214 +586,209 @@ Available Commands: help, about, skills, contact, clear
     <div class="container">
       <div class="section-header reveal">
         <span class="section-subtitle">Operations Hub</span>
-        <h2 class="section-title">Revenue Recovery & Volumetric Auditor</h2>
-        <p>An interactive scanner designed to automate shipping auditing, calculate volumetric weight, and recover carrier billing leakage.</p>
+        <h2 class="section-title">Amazon Outbound Conveyor & SLA Simulator</h2>
+        <p>An interactive outbound sortation game mimicking high-throughput Amazon hub conveyor flows. Sort parcels arriving in the scan zone under strict precision constraints.</p>
       </div>
 
       <div class="operations-hub-layout reveal">
         <!-- Control Panel Widget -->
         <div class="glass-card auditor-control-panel">
           <div class="glow-accent" style="top: 10%; left: 10%;"></div>
-          <h3>Auditor Controls</h3>
-          <p class="ops-only">
-            Trigger a real-time dimensional weight scan of multi-carrier shipping records (UPS, DHL, FedEx) to flag invoicing discrepancies and calculate cost leakage automatically.
-          </p>
-          <p class="dev-only">
-            Verify the mathematical algorithms running in the background. Audits volumetric weights using the carrier formula and checks against billing records.
-          </p>
+          <h3>Sortation Dashboard</h3>
+          <div class="ops-only">
+            <p style="margin-bottom: 1rem; font-size: 0.9rem;">
+              Maintain strict outbound delivery SLAs. Route arriving packages immediately into the correct transport lanes. Desktop players can use <strong>Left / Right Keyboard Arrow Keys</strong>!
+            </p>
+            <div class="sort-rules-card" style="background: rgba(0,0,0,0.15); border: 1px solid var(--glass-border); padding: 12px; border-radius: 8px; margin-bottom: 1.2rem; font-size: 0.8rem; line-height: 1.5;">
+              <span style="font-weight: bold; color: var(--accent-primary); display: block; margin-bottom: 6px; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px;">Routing SOP Guidelines:</span>
+              <ul style="list-style-type: none; display: flex; flex-direction: column; gap: 4px; padding-left: 0;">
+                <li style="display: flex; align-items: flex-start; gap: 6px;">
+                  <span style="color: var(--accent-primary);">⬅️</span>
+                  <span><strong>Air Express (Left):</strong> Weight &lt; 5.0 kg <em>AND</em> Priority Express (⭐)</span>
+                </li>
+                <li style="display: flex; align-items: flex-start; gap: 6px;">
+                  <span style="color: var(--accent-secondary);">➡️</span>
+                  <span><strong>Heavy Ground (Right):</strong> Weight &gt;= 5.0 kg <em>OR</em> Super Saver (📦)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="dev-only">
+            <p style="margin-bottom: 1rem; font-size: 0.9rem;">
+              Verify the queue-based sorting logic executing in Python. Automatically directs parcels into appropriate shipping buffers according to weight and urgency tags.
+            </p>
+          </div>
           
           <div class="auditor-stats-grid">
             <div class="auditor-stat-box">
-              <span class="auditor-stat-label">Parcels Scanned</span>
-              <span class="auditor-stat-val" id="auditCount">0 / 6</span>
+              <span class="auditor-stat-label">Processed</span>
+              <span class="auditor-stat-val" id="sortCount">0 / 15</span>
             </div>
             <div class="auditor-stat-box">
-              <span class="auditor-stat-label">Leakage Recovered</span>
-              <span class="auditor-stat-val" id="auditSavings" style="color: var(--accent-primary); font-weight: bold;">$0.00</span>
+              <span class="auditor-stat-label">Sorting Accuracy</span>
+              <span class="auditor-stat-val" id="sortAccuracy" style="color: #10b981; font-weight: bold;">100%</span>
             </div>
             <div class="auditor-stat-box">
-              <span class="auditor-stat-label">SLA Compliance</span>
-              <span class="auditor-stat-val" id="auditSLA">99.8%</span>
+              <span class="auditor-stat-label">Simulated Speed</span>
+              <span class="auditor-stat-val" id="sortSpeed">0 u/hr</span>
             </div>
             <div class="auditor-stat-box">
-              <span class="auditor-stat-label">Errors Detected</span>
-              <span class="auditor-stat-val" id="auditDiscrepancies" style="color: #f59e0b;">0</span>
+              <span class="auditor-stat-label">Sorting Errors</span>
+              <span class="auditor-stat-val" id="sortErrors" style="color: #f59e0b;">0</span>
             </div>
           </div>
 
-          <button id="btnRunAudit" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; justify-content: center; border-radius: 50px;">
-            <i data-lucide="scan"></i>
-            <span>Run Revenue Recovery Audit</span>
-          </button>
-
-          <!-- Custom Parcel Input Form Upgrade -->
-          <div class="custom-parcel-divider" style="margin: 1.5rem 0; border-top: 1px dashed var(--glass-border);"></div>
-          
-          <div class="custom-parcel-form">
-            <h4 style="font-family: var(--font-display); font-size: 1.05rem; margin-bottom: 0.8rem; display: flex; align-items: center; gap: 8px;">
-              <i data-lucide="plus-circle" style="width: 16px; height: 16px; color: var(--accent-primary);"></i>
-              <span>Audit Custom Shipment</span>
-            </h4>
-            
-            <div class="form-group-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-bottom: 0.8rem;">
-              <div class="form-group">
-                <label for="inputCarrier" style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Carrier</label>
-                <select id="inputCarrier" class="form-input" style="padding: 6px 12px; font-size: 0.8rem; height: 34px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); width: 100%;">
-                  <option value="UPS Express">UPS Express</option>
-                  <option value="DHL Express">DHL Express</option>
-                  <option value="FedEx Ground">FedEx Ground</option>
-                  <option value="Canada Packers">Canada Packers</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="inputBilled" style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Billed Cost ($)</label>
-                <input type="number" step="0.01" id="inputBilled" class="form-input" placeholder="45.00" value="45.00" style="padding: 6px 12px; font-size: 0.8rem; height: 34px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); width: 100%;" required>
-              </div>
-            </div>
-
-            <div class="form-group-row" style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 0.8rem; margin-bottom: 0.8rem;">
-              <div class="form-group">
-                <label for="inputActualWt" style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Actual Wt (kg)</label>
-                <input type="number" step="0.1" id="inputActualWt" class="form-input" placeholder="3.5" value="3.5" style="padding: 6px 12px; font-size: 0.8rem; height: 34px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); width: 100%;" required>
-              </div>
-              <div class="form-group">
-                <label for="inputRatePerKg" style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Rate ($/kg)</label>
-                <input type="number" step="0.1" id="inputRatePerKg" class="form-input" placeholder="8.0" value="8.0" style="padding: 6px 12px; font-size: 0.8rem; height: 34px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); width: 100%;" required>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; margin-bottom: 4px;">Dimensions L x W x H (cm)</label>
-              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.5rem;">
-                <input type="number" id="inputL" class="form-input" placeholder="L" value="30" style="padding: 6px 12px; font-size: 0.8rem; height: 34px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); text-align: center; width: 100%;" required>
-                <input type="number" id="inputW" class="form-input" placeholder="W" value="25" style="padding: 6px 12px; font-size: 0.8rem; height: 34px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); text-align: center; width: 100%;" required>
-                <input type="number" id="inputH" class="form-input" placeholder="H" value="20" style="padding: 6px 12px; font-size: 0.8rem; height: 34px; background: rgba(0,0,0,0.2); border: 1px solid var(--glass-border); border-radius: 6px; color: var(--text-primary); text-align: center; width: 100%;" required>
-              </div>
-            </div>
-
-            <button id="btnAuditCustom" class="btn btn-secondary" style="margin-top: 1rem; width: 100%; justify-content: center; border-radius: 50px; font-size: 0.85rem; padding: 8px 16px;">
-              <i data-lucide="plus"></i>
-              <span>Add & Audit Parcel</span>
+          <div class="ops-only game-button-panel" style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.8rem; width: 100%;">
+            <button id="btnStartGame" class="btn btn-primary" style="width: 100%; justify-content: center; border-radius: 50px;">
+              <i data-lucide="play-circle"></i>
+              <span>Start Sortation Shift</span>
             </button>
+            <div class="action-buttons-wrapper" id="gameActionButtons" style="display: none; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 0.5rem; width: 100%;">
+              <button id="btnRouteAir" class="btn btn-secondary" style="border-radius: 50px; font-size: 0.75rem; padding: 10px; justify-content: center; border-color: rgba(245, 158, 11, 0.4); text-transform: uppercase; width: 100%;">
+                <i data-lucide="arrow-left"></i>
+                <span>Air Express</span>
+              </button>
+              <button id="btnRouteGround" class="btn btn-secondary" style="border-radius: 50px; font-size: 0.75rem; padding: 10px; justify-content: center; border-color: rgba(0, 242, 254, 0.4); text-transform: uppercase; width: 100%;">
+                <span>Heavy Ground</span>
+                <i data-lucide="arrow-right"></i>
+              </button>
+            </div>
           </div>
         </div>
 
         <!-- Terminal / Table Screen -->
-        <div class="glass-card auditor-screen-card">
+        <div class="glass-card auditor-screen-card" id="conveyorScreenCard">
           <div class="glow-accent" style="bottom: 10%; right: 10%;"></div>
           
-          <!-- Operations Mode View: Parcel Audit Grid -->
-          <div class="ops-only auditor-manifest-table-wrapper" id="auditorManifestWrapper">
-            <div class="scanner-laser-bar" id="scannerLaserBar"></div>
-            <table class="auditor-table">
-              <thead>
-                <tr>
-                  <th>Parcel ID</th>
-                  <th>Carrier</th>
-                  <th>Declared Wt</th>
-                  <th>Dimensions (cm)</th>
-                  <th>Volumetric Wt</th>
-                  <th>Billed Rate</th>
-                  <th>Correct Rate</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody id="auditorTableBody">
-                <tr data-parcel="P-109">
-                  <td>P-109</td>
-                  <td>UPS Express</td>
-                  <td>4.5 kg</td>
-                  <td>30 x 20 x 15</td>
-                  <td class="col-volumetric">-</td>
-                  <td>$42.00</td>
-                  <td class="col-correct">-</td>
-                  <td><span class="audit-status pending">Pending</span></td>
-                </tr>
-                <tr data-parcel="P-110">
-                  <td>P-110</td>
-                  <td>DHL Express</td>
-                  <td>1.2 kg</td>
-                  <td>45 x 30 x 25</td>
-                  <td class="col-volumetric">-</td>
-                  <td>$58.50</td>
-                  <td class="col-correct">-</td>
-                  <td><span class="audit-status pending">Pending</span></td>
-                </tr>
-                <tr data-parcel="P-111">
-                  <td>P-111</td>
-                  <td>FedEx Ground</td>
-                  <td>8.0 kg</td>
-                  <td>20 x 20 x 20</td>
-                  <td class="col-volumetric">-</td>
-                  <td>$31.20</td>
-                  <td class="col-correct">-</td>
-                  <td><span class="audit-status pending">Pending</span></td>
-                </tr>
-                <tr data-parcel="P-112">
-                  <td>P-112</td>
-                  <td>UPS Standard</td>
-                  <td>3.0 kg</td>
-                  <td>50 x 40 x 30</td>
-                  <td class="col-volumetric">-</td>
-                  <td>$48.00</td>
-                  <td class="col-correct">-</td>
-                  <td><span class="audit-status pending">Pending</span></td>
-                </tr>
-                <tr data-parcel="P-113">
-                  <td>P-113</td>
-                  <td>Canada Packers</td>
-                  <td>12.5 kg</td>
-                  <td>25 x 25 x 20</td>
-                  <td class="col-volumetric">-</td>
-                  <td>$54.00</td>
-                  <td class="col-correct">-</td>
-                  <td><span class="audit-status pending">Pending</span></td>
-                </tr>
-                <tr data-parcel="P-114">
-                  <td>P-114</td>
-                  <td>DHL Economy</td>
-                  <td>2.1 kg</td>
-                  <td>35 x 30 x 20</td>
-                  <td class="col-volumetric">-</td>
-                  <td>$49.90</td>
-                  <td class="col-correct">-</td>
-                  <td><span class="audit-status pending">Pending</span></td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- Operations Mode View: Conveyor Belt Sort UI -->
+          <div class="ops-only conveyor-game-container" id="conveyorGameContainer" style="width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; padding: 0;">
+            
+            <!-- Game Overlays: Start Screen -->
+            <div class="game-overlay-screen" id="gameStartOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,7,10,0.92); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; box-sizing: border-box;">
+              <div class="g-overlay-logo" style="margin-bottom: 1rem; color: var(--accent-primary);"><i data-lucide="package" style="width: 48px; height: 48px;"></i></div>
+              <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.5px;">Outbound Sortation Shift</h3>
+              <p style="color: var(--text-secondary); max-width: 420px; font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                Parcels are arriving on the conveyor belt. Route them correctly to the **Air Express (Left)** or **Heavy Ground (Right)** lanes. Maintain 99.8% precision SLA.
+              </p>
+              <button id="btnOverlayStart" class="btn btn-primary" style="border-radius: 50px; padding: 12px 32px; font-size: 1rem;">
+                <i data-lucide="play"></i>
+                <span>Begin Shift</span>
+              </button>
+            </div>
+
+            <!-- Game Overlays: End Screen -->
+            <div class="game-overlay-screen" id="gameEndOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,7,10,0.95); z-index: 50; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; box-sizing: border-box;">
+              <div class="g-overlay-logo" style="margin-bottom: 0.8rem; color: #10b981;"><i data-lucide="clipboard-check" style="width: 44px; height: 44px;"></i></div>
+              <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.2rem; letter-spacing: -0.5px;">Shift Report Card</h3>
+              <p style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.2rem;">Amazon Fulfillment Station Outbound Audit</p>
+              
+              <!-- Report stats card -->
+              <div class="report-card-dashboard" style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); padding: 16px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; max-width: 380px; margin-bottom: 1.5rem;">
+                <div class="report-stat">
+                  <span style="font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; display: block; margin-bottom: 2px;">Your SLA</span>
+                  <span id="reportAccuracy" style="font-size: 1.3rem; font-weight: 800; color: var(--accent-primary);">0%</span>
+                </div>
+                <div class="report-stat">
+                  <span style="font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; display: block; margin-bottom: 2px;">Your Speed</span>
+                  <span id="reportSpeed" style="font-size: 1.3rem; font-weight: 800; color: #10b981;">0 u/h</span>
+                </div>
+                <div class="report-stat" style="grid-column: span 2; border-top: 1px dashed var(--glass-border); padding-top: 10px; margin-top: 4px;">
+                  <span style="font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; display: block; margin-bottom: 4px;">SLA Verification vs. Jay Patel</span>
+                  <span id="reportVerdict" style="font-size: 0.8rem; line-height: 1.4; color: var(--text-primary); display: block;">-</span>
+                </div>
+              </div>
+
+              <button id="btnRestartShift" class="btn btn-secondary" style="border-radius: 50px; padding: 10px 24px; font-size: 0.85rem;">
+                <i data-lucide="refresh-cw"></i>
+                <span>Clock In Again</span>
+              </button>
+            </div>
+
+            <!-- Active Gameplay Conveyor Belt Area -->
+            <div class="conveyor-game-track" style="flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(13, 20, 32, 0.4) 0%, rgba(5, 7, 10, 0.9) 100%); min-height: 250px;">
+              
+              <!-- Receptor Bins / Gates (Air Left, Ground Right) -->
+              <div class="gate-receptor receptor-left" id="receptorLeft">
+                <span class="receptor-label">Air Lane</span>
+              </div>
+              <div class="gate-receptor receptor-right" id="receptorRight">
+                <span class="receptor-label">Ground Lane</span>
+              </div>
+
+              <!-- Conveyor Belt Line representation -->
+              <div class="conveyor-belt-line" id="conveyorBeltLine"></div>
+
+              <!-- Scanning laser Zone box in the center -->
+              <div class="scanning-bracket" id="scanningBracket">
+                <div class="scanning-laser-line"></div>
+              </div>
+
+              <!-- Live Queue Container for packages sliding -->
+              <div class="packages-queue-container" id="packagesQueueContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden;">
+                <!-- Package cards injected here by JS -->
+              </div>
+              
+            </div>
+
+            <!-- Mini HUD for current scanned item details -->
+            <div class="scan-hud-bar" style="height: 60px; background: rgba(0, 0, 0, 0.6); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; font-family: var(--font-mono); font-size: 0.75rem;">
+              <div class="scan-hud-col">
+                <span style="color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; display: block; margin-bottom: 2px;">Item Code</span>
+                <span id="hudItemCode" style="color: var(--text-primary); font-weight: bold;">--</span>
+              </div>
+              <div class="scan-hud-col">
+                <span style="color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; display: block; margin-bottom: 2px;">Weight (kg)</span>
+                <span id="hudWeight" style="color: var(--accent-primary); font-weight: bold;">-- kg</span>
+              </div>
+              <div class="scan-hud-col">
+                <span style="color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; display: block; margin-bottom: 2px;">Service Class</span>
+                <span id="hudService" style="color: #10b981; font-weight: bold;">--</span>
+              </div>
+              <div class="scan-hud-col">
+                <span style="color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; display: block; margin-bottom: 2px;">Carrier</span>
+                <span id="hudCarrier" style="color: var(--text-secondary);">--</span>
+              </div>
+            </div>
+
           </div>
 
-          <!-- Developer Mode View: Python Script -->
+          <!-- Developer Mode View: Python Script package_router.py -->
           <div class="dev-only code-window" style="height: 100%; border: none; background: transparent; padding: 0;">
             <div class="code-header" style="background: rgba(0, 0, 0, 0.3);">
-              <div class="code-filename">revenue_recovery.py</div>
+              <div class="code-filename">package_router.py</div>
               <div class="terminal-buttons">
                 <span class="t-btn red"></span>
                 <span class="t-btn green"></span>
               </div>
             </div>
             <div class="code-body" style="max-height: 310px; overflow-y: auto;">
-              <pre><code><span class="code-keyword">def</span> <span class="code-builtin">audit_parcel_billing</span>(length, width, height, declared_wt, billed_rate, rate_per_kg):
-    <span class="code-comment"># 1. Standard carrier dimensional divisor</span>
-    DIM_DIVISOR = <span class="code-number">5000.0</span>
-    
-    <span class="code-comment"># 2. Calculate volumetric weight (kg)</span>
-    volumetric_wt = (length * width * height) / DIM_DIVISOR
-    
-    <span class="code-comment"># 3. Determine billable weight (greater of actual vs volumetric)</span>
-    billable_wt = <span class="code-builtin">max</span>(declared_wt, volumetric_wt)
-    correct_rate = billable_wt * rate_per_kg
-    
-    <span class="code-comment"># 4. Flag discrepancies in billing structures</span>
-    discrepancy = billed_rate - correct_rate
-    <span class="code-keyword">if</span> <span class="code-builtin">abs</span>(discrepancy) &gt; <span class="code-number">0.05</span>:
-        <span class="code-keyword">return</span> {{
-            <span class="code-string">"status"</span>: <span class="code-string">"FLAGGED"</span>,
-            <span class="code-string">"volumetric_wt"</span>: <span class="code-builtin">round</span>(volumetric_wt, <span class="code-number">2</span>),
-            <span class="code-string">"correct_rate"</span>: <span class="code-builtin">round</span>(correct_rate, <span class="code-number">2</span>),
-            <span class="code-string">"leakage"</span>: <span class="code-builtin">round</span>(discrepancy, <span class="code-number">2</span>)
-        }}
-    <span class="code-keyword">return</span> {{<span class="code-string">"status"</span>: <span class="code-string">"AUDITED"</span>, <span class="code-string">"volumetric_wt"</span>: <span class="code-builtin">round</span>(volumetric_wt, <span class="code-number">2</span>), <span class="code-string">"correct_rate"</span>: <span class="code-builtin">round</span>(correct_rate, <span class="code-number">2</span>), <span class="code-string">"leakage"</span>: <span class="code-number">0.0</span>}}</code></pre>
+              <pre><code><span class="code-keyword">import</span> queue
+
+<span class="code-keyword">class</span> <span class="code-builtin">PackageRouter</span>:
+    <span class="code-keyword">def</span> <span class="code-builtin">__init__</span>(self):
+        self.air_express_bin = []
+        self.heavy_ground_bin = []
+        self.processed = <span class="code-number">0</span>
+        self.errors = <span class="code-number">0</span>
+
+    <span class="code-keyword">def</span> <span class="code-builtin">route_package</span>(self, package):
+        <span class="code-comment"># 1. Extract packaging telemetry parameters</span>
+        weight = package.get(<span class="code-string">"weight"</span>, <span class="code-number">0.0</span>)
+        service = package.get(<span class="code-string">"service"</span>, <span class="code-string">"Ground"</span>)
+        is_priority = (service == <span class="code-string">"Priority Express"</span>)
+        
+        <span class="code-comment"># 2. Strict Amazon Outbound SLA Routing Decision rules</span>
+        should_be_air = (weight &lt; <span class="code-number">5.0</span>) <span class="code-keyword">and</span> is_priority
+        
+        <span class="code-keyword">if</span> should_be_air:
+            destination = <span class="code-string">"Air Express"</span>
+            self.air_express_bin.append(package)
+        <span class="code-keyword">else</span>:
+            destination = <span class="code-string">"Heavy Ground"</span>
+            self.heavy_ground_bin.append(package)
+            
+        self.processed += <span class="code-number">1</span>
+        <span class="code-keyword">return</span> destination</code></pre>
             </div>
           </div>
 

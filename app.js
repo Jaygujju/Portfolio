@@ -406,371 +406,301 @@ Summary:       A software engineering graduate with over 3 years
   });
 
   // ========================================================
-  // 8. LOGIFLOW REVENUE RECOVERY AUDITOR SIMULATOR
+  // 8. AMAZON CONVEYOR BELT SORTATION SIMULATOR
   // ========================================================
-  const btnRunAudit = document.getElementById('btnRunAudit');
-  const btnAuditCustom = document.getElementById('btnAuditCustom');
-  const scannerLaserBar = document.getElementById('scannerLaserBar');
-  const auditCount = document.getElementById('auditCount');
-  const auditSavings = document.getElementById('auditSavings');
-  const auditSLA = document.getElementById('auditSLA');
-  const auditDiscrepancies = document.getElementById('auditDiscrepancies');
+  const btnStartGame = document.getElementById('btnStartGame');
+  const btnOverlayStart = document.getElementById('btnOverlayStart');
+  const btnRestartShift = document.getElementById('btnRestartShift');
   
-  const parcels = [
-    { id: 'P-109', carrier: 'UPS Express', actualWt: 4.5, l: 30, w: 20, h: 15, billed: 42.00, rate: 8.00 },
-    { id: 'P-110', carrier: 'DHL Express', actualWt: 1.2, l: 45, w: 30, h: 25, billed: 58.50, rate: 10.00 },
-    { id: 'P-111', carrier: 'FedEx Ground', actualWt: 8.0, l: 20, w: 20, h: 20, billed: 31.20, rate: 3.90 },
-    { id: 'P-112', carrier: 'UPS Standard', actualWt: 3.0, l: 50, w: 40, h: 30, billed: 48.00, rate: 4.00 },
-    { id: 'P-113', carrier: 'Canada Packers', actualWt: 12.5, l: 25, w: 25, h: 20, billed: 54.00, rate: 4.30 },
-    { id: 'P-114', carrier: 'DHL Economy', actualWt: 2.1, l: 35, w: 30, h: 20, billed: 49.90, rate: 9.50 }
-  ];
+  const btnRouteAir = document.getElementById('btnRouteAir');
+  const btnRouteGround = document.getElementById('btnRouteGround');
+  
+  const gameActionButtons = document.getElementById('gameActionButtons');
+  
+  const gameStartOverlay = document.getElementById('gameStartOverlay');
+  const gameEndOverlay = document.getElementById('gameEndOverlay');
+  const conveyorGameContainer = document.getElementById('conveyorGameContainer');
+  const conveyorScreenCard = document.getElementById('conveyorScreenCard');
+  const packagesQueueContainer = document.getElementById('packagesQueueContainer');
+  
+  // HUD Elements
+  const sortCount = document.getElementById('sortCount');
+  const sortAccuracy = document.getElementById('sortAccuracy');
+  const sortSpeed = document.getElementById('sortSpeed');
+  const sortErrors = document.getElementById('sortErrors');
+  
+  // Scan HUD Elements
+  const hudItemCode = document.getElementById('hudItemCode');
+  const hudWeight = document.getElementById('hudWeight');
+  const hudService = document.getElementById('hudService');
+  const hudCarrier = document.getElementById('hudCarrier');
+  
+  // End Screen Report Elements
+  const reportAccuracy = document.getElementById('reportAccuracy');
+  const reportSpeed = document.getElementById('reportSpeed');
+  const reportVerdict = document.getElementById('reportVerdict');
+  
+  // Receptor elements for visuals
+  const receptorLeft = document.getElementById('receptorLeft');
+  const receptorRight = document.getElementById('receptorRight');
 
-  let isAuditing = false;
-  let customParcelIdCounter = 115;
+  let isGameActive = false;
+  let currentPkgIndex = 0;
+  let errorsCount = 0;
+  let startTime = 0;
+  let packagesQueue = [];
+  const totalPackages = 15;
+  
+  const carriersList = ['UPS Express', 'DHL Express', 'FedEx Ground', 'Canada Packers', 'UPS Ground', 'DHL Economy'];
 
-  // Global helper function to animate number tick ups
-  function animateCounter(element, start, end, duration, prefix = '', suffix = '') {
-    const startTime = performance.now();
-    function update(currentTime) {
-      const elapsed = currentTime - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const currentVal = start + progress * (end - start);
-      if (prefix === '$') {
-        element.textContent = `${prefix}${currentVal.toFixed(2)}${suffix}`;
-      } else {
-        element.textContent = `${prefix}${Math.floor(currentVal)}${suffix}`;
-      }
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        if (prefix === '$') {
-          element.textContent = `${prefix}${end.toFixed(2)}${suffix}`;
+  // Stately random packages generator
+  function generateShiftPackages() {
+    const pkgs = [];
+    for (let i = 1; i <= totalPackages; i++) {
+      const isPriority = Math.random() > 0.45;
+      const weight = isPriority 
+        ? parseFloat((1.0 + Math.random() * 5.2).toFixed(1)) 
+        : parseFloat((4.2 + Math.random() * 8.8).toFixed(1));
+      
+      const service = isPriority ? 'Priority Express' : 'Super Saver Ground';
+      const carrier = carriersList[Math.floor(Math.random() * carriersList.length)];
+      
+      pkgs.push({
+        id: `PKG-${900 + i}`,
+        weight: weight,
+        service: service,
+        carrier: carrier
+      });
+    }
+    return pkgs;
+  }
+
+  // Visual queue DOM renderer
+  function initializeQueueDOM() {
+    packagesQueueContainer.innerHTML = '';
+    packagesQueue.forEach((pkg, index) => {
+      const card = document.createElement('div');
+      card.className = 'package-card entering';
+      card.id = `card-${index}`;
+      
+      const isPriority = (pkg.service === 'Priority Express');
+      const tagClass = isPriority ? 'priority' : 'ground';
+      const tagIcon = isPriority ? '⭐' : '📦';
+      
+      card.innerHTML = `
+        <span class="package-tag ${tagClass}">${tagIcon} ${pkg.service.split(' ')[0]}</span>
+        <div class="package-weight-lbl">${pkg.weight.toFixed(1)} kg</div>
+        <div class="package-id-lbl">${pkg.id}</div>
+      `;
+      packagesQueueContainer.appendChild(card);
+    });
+  }
+
+  // Transition and reposition layout cards
+  function updateConveyorVisuals() {
+    packagesQueue.forEach((pkg, index) => {
+      const card = document.getElementById(`card-${index}`);
+      if (!card) return;
+
+      card.className = 'package-card';
+      
+      if (index === currentPkgIndex) {
+        card.classList.add('scanning');
+      } else if (index === currentPkgIndex + 1) {
+        card.classList.add('entering');
+        card.style.left = '25%';
+        card.style.transform = 'translate(-50%, -50%) scale(0.85)';
+        card.style.opacity = '0.55';
+      } else if (index > currentPkgIndex + 1) {
+        card.classList.add('entering');
+        card.style.left = '10%';
+        card.style.transform = 'translate(-50%, -50%) scale(0.75)';
+        card.style.opacity = '0';
+      } else if (index < currentPkgIndex) {
+        // Routed packages hold class assignments from execution decision
+        const decision = card.getAttribute('data-decision');
+        if (decision === 'air') {
+          card.classList.add('routed-left');
         } else {
-          element.textContent = `${prefix}${end}${suffix}`;
+          card.classList.add('routed-right');
         }
+      }
+    });
+
+    // Populate the Scanned telemetries HUD
+    if (currentPkgIndex < totalPackages) {
+      const activePkg = packagesQueue[currentPkgIndex];
+      hudItemCode.textContent = activePkg.id;
+      hudWeight.textContent = `${activePkg.weight.toFixed(1)} kg`;
+      hudService.textContent = activePkg.service;
+      hudCarrier.textContent = activePkg.carrier;
+    } else {
+      hudItemCode.textContent = '--';
+      hudWeight.textContent = '-- kg';
+      hudService.textContent = '--';
+      hudCarrier.textContent = '--';
+    }
+  }
+
+  function startShift() {
+    isGameActive = true;
+    currentPkgIndex = 0;
+    errorsCount = 0;
+    packagesQueue = generateShiftPackages();
+    startTime = Date.now();
+    
+    // Hide screens
+    gameStartOverlay.style.display = 'none';
+    gameEndOverlay.style.display = 'none';
+    
+    // Show manual click triggers
+    gameActionButtons.style.display = 'grid';
+    if (btnStartGame) btnStartGame.style.display = 'none';
+    
+    // Start track line animation
+    const track = document.querySelector('.conveyor-game-track');
+    if (track) track.classList.add('game-active');
+    
+    // HUD initial status reset
+    sortCount.textContent = `0 / ${totalPackages}`;
+    sortAccuracy.textContent = '100%';
+    sortErrors.textContent = '0';
+    sortSpeed.textContent = '0 u/h';
+
+    initializeQueueDOM();
+    updateConveyorVisuals();
+  }
+
+  function makeSortDecision(decision) {
+    if (!isGameActive || currentPkgIndex >= totalPackages) return;
+
+    const pkg = packagesQueue[currentPkgIndex];
+    const isPriority = (pkg.service === 'Priority Express');
+    
+    // SLA Standard Carrier logic:
+    // - Air Express: weight < 5.0 kg AND Priority Express
+    // - Heavy Ground: weight >= 5.0 kg OR Super Saver Ground
+    const shouldBeAir = (pkg.weight < 5.0) && isPriority;
+    const choseAir = (decision === 'air');
+    const isCorrect = (shouldBeAir === choseAir);
+    
+    const activeCard = document.getElementById(`card-${currentPkgIndex}`);
+    if (activeCard) {
+      activeCard.setAttribute('data-decision', decision);
+    }
+    
+    const track = document.querySelector('.conveyor-game-track');
+    
+    if (isCorrect) {
+      // Trigger Green Neon Sweep Flash
+      if (track) {
+        track.classList.remove('flash-success');
+        void track.offsetWidth; // Reflow
+        track.classList.add('flash-success');
+        setTimeout(() => track.classList.remove('flash-success'), 400);
+      }
+      
+      const receptor = choseAir ? receptorLeft : receptorRight;
+      if (receptor) {
+        receptor.classList.add('active');
+        setTimeout(() => receptor.classList.remove('active'), 300);
+      }
+    } else {
+      // Trigger Red Shaking Vibration
+      errorsCount++;
+      if (track) {
+        track.classList.remove('shake-error');
+        void track.offsetWidth; // Reflow
+        track.classList.add('shake-error');
+        setTimeout(() => track.classList.remove('shake-error'), 450);
       }
     }
-    requestAnimationFrame(update);
+    
+    // Increment process counters
+    currentPkgIndex++;
+    
+    // Live update HUD metrics
+    const scanned = currentPkgIndex;
+    const accuracy = Math.round(((scanned - errorsCount) / scanned) * 100);
+    sortCount.textContent = `${scanned} / ${totalPackages}`;
+    sortAccuracy.textContent = `${accuracy}%`;
+    sortErrors.textContent = errorsCount;
+    
+    // Live speed calculation
+    const elapsedSeconds = (Date.now() - startTime) / 1000;
+    const itemsPerHr = Math.round((scanned / elapsedSeconds) * 3600);
+    sortSpeed.textContent = `${itemsPerHr} u/h`;
+    
+    updateConveyorVisuals();
+
+    // End Game condition
+    if (currentPkgIndex === totalPackages) {
+      endShift(accuracy, itemsPerHr);
+    }
   }
 
-  if (btnRunAudit) {
-    btnRunAudit.addEventListener('click', () => {
-      if (isAuditing) return;
-      isAuditing = true;
-
-      // 1. Enter active state for button
-      btnRunAudit.disabled = true;
-      if (btnAuditCustom) btnAuditCustom.disabled = true;
-      const originalBtnHTML = btnRunAudit.innerHTML;
-      btnRunAudit.innerHTML = '<span>Scanning Invoices...</span><i class="animate-spin" data-lucide="loader"></i>';
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons({ attrs: { class: 'animate-spin' } });
-      }
-
-      // 2. Trigger glowing scanner laser bar sweep
-      if (scannerLaserBar) {
-        scannerLaserBar.classList.remove('active');
-        void scannerLaserBar.offsetWidth; // Trigger reflow to restart animation
-        scannerLaserBar.classList.add('active');
-      }
-
-      // 3. Reset stats panel
-      auditCount.textContent = `0 / ${parcels.length}`;
-      auditSavings.textContent = '$0.00';
-      auditDiscrepancies.textContent = '0';
-      auditSLA.textContent = '100.0%';
-
-      // 4. Reset table body display
-      const rows = document.querySelectorAll('#auditorTableBody tr');
-      rows.forEach(row => {
-        row.className = ''; // Remove success/flagged/auditing classes
-        const colVolumetric = row.querySelector('.col-volumetric');
-        const colCorrect = row.querySelector('.col-correct');
-        const statusTd = row.querySelector('td:last-child');
-
-        if (colVolumetric) colVolumetric.textContent = '-';
-        if (colCorrect) colCorrect.textContent = '-';
-        if (statusTd) {
-          statusTd.innerHTML = '<span class="audit-status pending">Pending</span>';
-        }
-      });
-
-      let currentScanned = 0;
-      let currentDiscrepancies = 0;
-      let currentLeakage = 0;
-
-      // 5. Staggered row-by-row scanning processing
-      parcels.forEach((parcel, index) => {
-        const row = document.querySelector(`#auditorTableBody tr[data-parcel="${parcel.id}"]`);
-        
-        // Stagger scanning start
-        setTimeout(() => {
-          if (!row) return;
-
-          // Mark row as currently scanning
-          row.classList.add('auditing-now');
-          const statusTd = row.querySelector('td:last-child');
-          if (statusTd) {
-            statusTd.innerHTML = '<span class="audit-status scanning">Scanning</span>';
-          }
-          
-          // Stagger actual audit completion (300ms after scanning starts)
-          setTimeout(() => {
-            row.classList.remove('auditing-now');
-            
-            // Volumetric Weight Calculation
-            const volumetricWt = (parcel.l * parcel.w * parcel.h) / 5000;
-            const billableWt = Math.max(parcel.actualWt, volumetricWt);
-            const correctRate = billableWt * parcel.rate;
-            const discrepancy = Math.abs(parcel.billed - correctRate);
-
-            // Update row text cells
-            const colVolumetric = row.querySelector('.col-volumetric');
-            const colCorrect = row.querySelector('.col-correct');
-            if (colVolumetric) colVolumetric.textContent = `${volumetricWt.toFixed(2)} kg`;
-            if (colCorrect) colCorrect.textContent = `$${correctRate.toFixed(2)}`;
-
-            let isFlagged = discrepancy > 0.05;
-            let rowLeakage = 0;
-
-            if (isFlagged) {
-              row.classList.add('audited-discrepancy');
-              if (statusTd) {
-                statusTd.innerHTML = '<span class="audit-status flagged"><i data-lucide="alert-triangle" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Flagged</span>';
-              }
-              currentDiscrepancies++;
-              
-              // Only count overcharges towards recovered leakage
-              if (parcel.billed > correctRate) {
-                rowLeakage = parcel.billed - correctRate;
-              }
-            } else {
-              row.classList.add('audited-success');
-              if (statusTd) {
-                statusTd.innerHTML = '<span class="audit-status success"><i data-lucide="check" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Audited</span>';
-              }
-            }
-
-            // Cache calculations on the row element for global recount
-            row.setAttribute('data-leakage', rowLeakage);
-            row.setAttribute('data-discrepancy', isFlagged ? '1' : '0');
-
-            // Create Lucide Icons for dynamic row elements
-            if (typeof lucide !== 'undefined') {
-              lucide.createIcons();
-            }
-
-            // Update Stats Variables
-            currentScanned++;
-            const prevLeakage = currentLeakage;
-            currentLeakage += rowLeakage;
-
-            // Update Stats Meters
-            auditCount.textContent = `${currentScanned} / ${parcels.length}`;
-            animateCounter(auditDiscrepancies, parseFloat(auditDiscrepancies.textContent), currentDiscrepancies, 250);
-            
-            if (rowLeakage > 0) {
-              animateCounter(auditSavings, prevLeakage, currentLeakage, 350, '$');
-            }
-
-            // Custom SLA calculation
-            const finalSLATarget = 100 - ((currentDiscrepancies / parcels.length) * 15);
-            if (currentScanned === parcels.length) {
-              animateCounter(auditSLA, parseFloat((auditSLA.textContent || '100%').replace('%', '')), Math.max(70.0, finalSLATarget), 500, '', '%');
-            } else {
-              auditSLA.textContent = `${(100 - ((currentDiscrepancies / currentScanned) * 15)).toFixed(1)}%`;
-            }
-
-            // Final Parcel cleanups
-            if (currentScanned === parcels.length) {
-              setTimeout(() => {
-                if (scannerLaserBar) scannerLaserBar.classList.remove('active');
-                btnRunAudit.disabled = false;
-                if (btnAuditCustom) btnAuditCustom.disabled = false;
-                btnRunAudit.innerHTML = originalBtnHTML;
-                if (typeof lucide !== 'undefined') {
-                  lucide.createIcons();
-                }
-                isAuditing = false;
-              }, 400);
-            }
-
-          }, 300);
-
-        }, index * 350); // Stagger scanning of rows every 350ms
-      });
-    });
+  function endShift(accuracy, speed) {
+    isGameActive = false;
+    
+    // Stop track animation
+    const track = document.querySelector('.conveyor-game-track');
+    if (track) track.classList.remove('game-active');
+    
+    // Show restart panel
+    gameActionButtons.style.display = 'none';
+    if (btnStartGame) btnStartGame.style.display = 'block';
+    
+    // Compile shift report summaries
+    reportAccuracy.textContent = `${accuracy}%`;
+    reportSpeed.textContent = `${speed} u/h`;
+    
+    let verdictHTML = '';
+    if (accuracy >= 98.0) {
+      verdictHTML = `🏆 <strong>ELITE SLA PRECISION!</strong> You achieved an incredible outbound accuracy. You matched Jay Patel's 99.8% precision sortation standard under Seneca-optimized queues!`;
+    } else if (accuracy >= 85.0) {
+      verdictHTML = `👌 <strong>COMPLIANT OUTBOUND!</strong> High speed sortation achieved. Just minor misroutes, safe within fulfillment depot tolerances. Excellent work!`;
+    } else {
+      verdictHTML = `⚠️ <strong>DEPOT SLA FAILURE!</strong> Sort errors caused conveyor backing. Recruiters and dispatch require Jay's automated mathematical routing scripts to salvage accuracy.`;
+    }
+    reportVerdict.innerHTML = verdictHTML;
+    
+    gameEndOverlay.style.display = 'flex';
   }
 
-  // 9. AUDIT CUSTOM SHIPMENT FORM
-  if (btnAuditCustom) {
-    btnAuditCustom.addEventListener('click', () => {
-      if (isAuditing) return;
+  // Keyboard desktop Arrow Listeners
+  window.addEventListener('keydown', (e) => {
+    if (!isGameActive) return;
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      makeSortDecision('air');
+    } else if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      makeSortDecision('ground');
+    }
+  });
 
-      const carrier = document.getElementById('inputCarrier').value;
-      const billed = parseFloat(document.getElementById('inputBilled').value);
-      const actualWt = parseFloat(document.getElementById('inputActualWt').value);
-      const rate = parseFloat(document.getElementById('inputRatePerKg').value);
-      const l = parseInt(document.getElementById('inputL').value);
-      const w = parseInt(document.getElementById('inputW').value);
-      const h = parseInt(document.getElementById('inputH').value);
+  // Action Click Bindings
+  if (btnStartGame) btnStartGame.addEventListener('click', startShift);
+  if (btnOverlayStart) btnOverlayStart.addEventListener('click', startShift);
+  if (btnRestartShift) btnRestartShift.addEventListener('click', startShift);
+  
+  if (btnRouteAir) btnRouteAir.addEventListener('click', () => makeSortDecision('air'));
+  if (btnRouteGround) btnRouteGround.addEventListener('click', () => makeSortDecision('ground'));
 
-      if (!carrier || isNaN(billed) || isNaN(actualWt) || isNaN(rate) || isNaN(l) || isNaN(w) || isNaN(h)) {
-        alert('Please fill out all fields with valid numbers before auditing.');
-        return;
-      }
-      if (billed <= 0 || actualWt <= 0 || rate <= 0 || l <= 0 || w <= 0 || h <= 0) {
-        alert('All dimensional, weight, and pricing parameters must be positive numbers.');
-        return;
-      }
-
-      isAuditing = true;
-
-      // Enter loading state for buttons
-      btnAuditCustom.disabled = true;
-      if (btnRunAudit) btnRunAudit.disabled = true;
-
-      const originalCustomBtnHTML = btnAuditCustom.innerHTML;
-      btnAuditCustom.innerHTML = '<span>Auditing...</span><i class="animate-spin" data-lucide="loader"></i>';
-      if (typeof lucide !== 'undefined') {
-        lucide.createIcons({ attrs: { class: 'animate-spin' } });
-      }
-
-      // Generate a unique ID and push to parcels array
-      const parcelId = `P-${customParcelIdCounter++}`;
-      const newParcel = {
-        id: parcelId,
-        carrier: carrier,
-        actualWt: actualWt,
-        l: l,
-        w: w,
-        h: h,
-        billed: billed,
-        rate: rate
-      };
-      parcels.push(newParcel);
-
-      // Prepend a new row to the table body
-      const newRowHTML = `
-        <tr data-parcel="${parcelId}">
-          <td>${parcelId}</td>
-          <td>${newParcel.carrier}</td>
-          <td>${newParcel.actualWt.toFixed(1)} kg</td>
-          <td>${newParcel.l} x ${newParcel.w} x ${newParcel.h}</td>
-          <td class="col-volumetric">-</td>
-          <td>$${newParcel.billed.toFixed(2)}</td>
-          <td class="col-correct">-</td>
-          <td><span class="audit-status pending">Pending</span></td>
-        </tr>
-      `;
-      const tableBody = document.getElementById('auditorTableBody');
-      if (tableBody) {
-        tableBody.insertAdjacentHTML('afterbegin', newRowHTML);
-      }
-
-      // Trigger glowing scanner laser bar sweep
-      if (scannerLaserBar) {
-        scannerLaserBar.classList.remove('active');
-        void scannerLaserBar.offsetWidth; // Reflow
-        scannerLaserBar.classList.add('active');
-      }
-
-      // Audit specific row after short delay
-      setTimeout(() => {
-        const row = document.querySelector(`#auditorTableBody tr[data-parcel="${parcelId}"]`);
-        if (!row) return;
-
-        // Mark as scanning
-        row.classList.add('auditing-now');
-        const statusTd = row.querySelector('td:last-child');
-        if (statusTd) {
-          statusTd.innerHTML = '<span class="audit-status scanning">Scanning</span>';
-        }
-
-        setTimeout(() => {
-          row.classList.remove('auditing-now');
-
-          // Calculations
-          const volumetricWt = (newParcel.l * newParcel.w * newParcel.h) / 5000;
-          const billableWt = Math.max(newParcel.actualWt, volumetricWt);
-          const correctRate = billableWt * newParcel.rate;
-          const discrepancy = Math.abs(newParcel.billed - correctRate);
-
-          // Update text cells
-          const colVolumetric = row.querySelector('.col-volumetric');
-          const colCorrect = row.querySelector('.col-correct');
-          if (colVolumetric) colVolumetric.textContent = `${volumetricWt.toFixed(2)} kg`;
-          if (colCorrect) colCorrect.textContent = `$${correctRate.toFixed(2)}`;
-
-          let isFlagged = discrepancy > 0.05;
-          let rowLeakage = 0;
-
-          if (isFlagged) {
-            row.classList.add('audited-discrepancy');
-            if (statusTd) {
-              statusTd.innerHTML = '<span class="audit-status flagged"><i data-lucide="alert-triangle" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Flagged</span>';
-            }
-            if (newParcel.billed > correctRate) {
-              rowLeakage = newParcel.billed - correctRate;
-            }
-          } else {
-            row.classList.add('audited-success');
-            if (statusTd) {
-              statusTd.innerHTML = '<span class="audit-status success"><i data-lucide="check" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Audited</span>';
-            }
-          }
-
-          // Cache calculations on the row element for global recount
-          row.setAttribute('data-leakage', rowLeakage);
-          row.setAttribute('data-discrepancy', isFlagged ? '1' : '0');
-
-          if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
-          }
-
-          // Recount total stats from all rows
-          const allRows = document.querySelectorAll('#auditorTableBody tr');
-          let auditedCount = 0;
-          let discrepancyCount = 0;
-          let totalLeakage = 0;
-
-          allRows.forEach(r => {
-            if (r.classList.contains('audited-success') || r.classList.contains('audited-discrepancy')) {
-              auditedCount++;
-              const leak = parseFloat(r.getAttribute('data-leakage') || '0');
-              const disc = parseInt(r.getAttribute('data-discrepancy') || '0');
-              totalLeakage += leak;
-              discrepancyCount += disc;
-            }
-          });
-
-          // Update stats panel
-          auditCount.textContent = `${auditedCount} / ${allRows.length}`;
-          animateCounter(auditDiscrepancies, parseFloat(auditDiscrepancies.textContent || '0'), discrepancyCount, 250);
-          animateCounter(auditSavings, parseFloat((auditSavings.textContent || '$0.00').replace('$', '')), totalLeakage, 350, '$');
-
-          // SLA target calculation
-          const finalSLATarget = auditedCount === 0 ? 100.0 : Math.max(70.0, 100.0 - (discrepancyCount / auditedCount) * 15.0);
-          animateCounter(auditSLA, parseFloat((auditSLA.textContent || '100%').replace('%', '')), finalSLATarget, 500, '', '%');
-
-          // Clean up buttons
-          setTimeout(() => {
-            if (scannerLaserBar) scannerLaserBar.classList.remove('active');
-            btnAuditCustom.disabled = false;
-            btnAuditCustom.innerHTML = originalCustomBtnHTML;
-            if (btnRunAudit) {
-              btnRunAudit.disabled = false;
-            }
-            if (typeof lucide !== 'undefined') {
-              lucide.createIcons();
-            }
-            isAuditing = false;
-          }, 400);
-
-        }, 300);
-
-      }, 600);
-    });
-  }
+  // Dual Lens reset: Clock off game if Dev lens is toggled
+  const originalSwitchLens = switchLens;
+  switchLens = function(mode) {
+    originalSwitchLens(mode);
+    if (mode === 'dev' && isGameActive) {
+      isGameActive = false;
+      const track = document.querySelector('.conveyor-game-track');
+      if (track) track.classList.remove('game-active');
+      gameActionButtons.style.display = 'none';
+      if (btnStartGame) btnStartGame.style.display = 'block';
+      gameStartOverlay.style.display = 'flex';
+      gameEndOverlay.style.display = 'none';
+    }
+  };
 });
+
 
