@@ -577,160 +577,175 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
 
-        <!-- Project 4: Complete Mart Database -->
-        <div class="glass-card project-card reveal">
-          <div class="project-badge">Data Integrity</div>
-          <div class="project-preview">
-            <div class="project-preview-icon"><i data-lucide="database" style="width: 48px; height: 48px;"></i></div>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Complete Mart Inventory DB</h3>
-            
-            <!-- Tech View Standard Desc -->
-            <p class="project-desc project-desc-standard">
-              A database engine using Python and SQLite3. Implements 3NF relational schemas, primary key indexing, cascade triggers, and atomic sale transactions with robust rollback safeguards.
-            </p>
-            
-            <!-- Ops View Metrics -->
-            <div class="project-metrics">
-              <div class="metric-row">
-                <span class="metric-lbl">SKUs Monitored</span>
-                <span class="metric-val">500+ Items</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">U-Haul Turnover</span>
-                <span class="metric-val">+15% Speed</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">Query Latency</span>
-                <span class="metric-val">&lt; 2.5ms</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">Admin Time Saved</span>
-                <span class="metric-val">8 hrs/week</span>
-              </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Operations Hub Section -->
+  <section id="operations-hub" class="operations-hub-section" style="background: rgba(0, 0, 0, 0.2);">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-subtitle">Operations Hub</span>
+        <h2 class="section-title">Revenue Recovery & Volumetric Auditor</h2>
+        <p>An interactive scanner designed to automate shipping auditing, calculate volumetric weight, and recover carrier billing leakage.</p>
+      </div>
+
+      <div class="operations-hub-layout reveal">
+        <!-- Control Panel Widget -->
+        <div class="glass-card auditor-control-panel">
+          <div class="glow-accent" style="top: 10%; left: 10%;"></div>
+          <h3>Auditor Controls</h3>
+          <p class="ops-only">
+            Trigger a real-time dimensional weight scan of multi-carrier shipping records (UPS, DHL, FedEx) to flag invoicing discrepancies and calculate cost leakage automatically.
+          </p>
+          <p class="dev-only">
+            Verify the mathematical algorithms running in the background. Audits volumetric weights using the carrier formula and checks against billing records.
+          </p>
+          
+          <div class="auditor-stats-grid">
+            <div class="auditor-stat-box">
+              <span class="auditor-stat-label">Parcels Scanned</span>
+              <span class="auditor-stat-val" id="auditCount">0 / 6</span>
             </div>
-            
-            <div class="project-tags">
-              <span class="project-tag">SQL / SQLite3</span>
-              <span class="project-tag">Relational DB</span>
-              <span class="project-tag">Python Transactions</span>
+            <div class="auditor-stat-box">
+              <span class="auditor-stat-label">Leakage Recovered</span>
+              <span class="auditor-stat-val" id="auditSavings" style="color: var(--accent-primary); font-weight: bold;">$0.00</span>
+            </div>
+            <div class="auditor-stat-box">
+              <span class="auditor-stat-label">SLA Compliance</span>
+              <span class="auditor-stat-val" id="auditSLA">99.8%</span>
+            </div>
+            <div class="auditor-stat-box">
+              <span class="auditor-stat-label">Errors Detected</span>
+              <span class="auditor-stat-val" id="auditDiscrepancies" style="color: #f59e0b;">0</span>
             </div>
           </div>
-          <div class="project-footer">
-            <span class="project-link">
-              <i data-lucide="database"></i>
-              <span>Relational DB</span>
-            </span>
-            <a href="projects/inventory-manager.html" class="project-link" style="color: var(--accent-primary);">
-              <span>Details</span>
-              <i data-lucide="chevron-right"></i>
-            </a>
-          </div>
+
+          <button id="btnRunAudit" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; justify-content: center; border-radius: 50px;">
+            <i data-lucide="scan"></i>
+            <span>Run Revenue Recovery Audit</span>
+          </button>
         </div>
 
-        <!-- Project 5: Amazon Sorting Simulator -->
-        <div class="glass-card project-card reveal" style="transition-delay: 100ms;">
-          <div class="project-badge">Concurrency</div>
-          <div class="project-preview">
-            <div class="project-preview-icon"><i data-lucide="package" style="width: 48px; height: 48px;"></i></div>
+        <!-- Terminal / Table Screen -->
+        <div class="glass-card auditor-screen-card">
+          <div class="glow-accent" style="bottom: 10%; right: 10%;"></div>
+          
+          <!-- Operations Mode View: Parcel Audit Grid -->
+          <div class="ops-only auditor-manifest-table-wrapper" id="auditorManifestWrapper">
+            <div class="scanner-laser-bar" id="scannerLaserBar"></div>
+            <table class="auditor-table">
+              <thead>
+                <tr>
+                  <th>Parcel ID</th>
+                  <th>Carrier</th>
+                  <th>Declared Wt</th>
+                  <th>Dimensions (cm)</th>
+                  <th>Volumetric Wt</th>
+                  <th>Billed Rate</th>
+                  <th>Correct Rate</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="auditorTableBody">
+                <tr data-parcel="P-109">
+                  <td>P-109</td>
+                  <td>UPS Express</td>
+                  <td>4.5 kg</td>
+                  <td>30 x 20 x 15</td>
+                  <td class="col-volumetric">-</td>
+                  <td>$42.00</td>
+                  <td class="col-correct">-</td>
+                  <td><span class="audit-status pending">Pending</span></td>
+                </tr>
+                <tr data-parcel="P-110">
+                  <td>P-110</td>
+                  <td>DHL Express</td>
+                  <td>1.2 kg</td>
+                  <td>45 x 30 x 25</td>
+                  <td class="col-volumetric">-</td>
+                  <td>$58.50</td>
+                  <td class="col-correct">-</td>
+                  <td><span class="audit-status pending">Pending</span></td>
+                </tr>
+                <tr data-parcel="P-111">
+                  <td>P-111</td>
+                  <td>FedEx Ground</td>
+                  <td>8.0 kg</td>
+                  <td>20 x 20 x 20</td>
+                  <td class="col-volumetric">-</td>
+                  <td>$31.20</td>
+                  <td class="col-correct">-</td>
+                  <td><span class="audit-status pending">Pending</span></td>
+                </tr>
+                <tr data-parcel="P-112">
+                  <td>P-112</td>
+                  <td>UPS Standard</td>
+                  <td>3.0 kg</td>
+                  <td>50 x 40 x 30</td>
+                  <td class="col-volumetric">-</td>
+                  <td>$48.00</td>
+                  <td class="col-correct">-</td>
+                  <td><span class="audit-status pending">Pending</span></td>
+                </tr>
+                <tr data-parcel="P-113">
+                  <td>P-113</td>
+                  <td>Canada Packers</td>
+                  <td>12.5 kg</td>
+                  <td>25 x 25 x 20</td>
+                  <td class="col-volumetric">-</td>
+                  <td>$54.00</td>
+                  <td class="col-correct">-</td>
+                  <td><span class="audit-status pending">Pending</span></td>
+                </tr>
+                <tr data-parcel="P-114">
+                  <td>P-114</td>
+                  <td>DHL Economy</td>
+                  <td>2.1 kg</td>
+                  <td>35 x 30 x 20</td>
+                  <td class="col-volumetric">-</td>
+                  <td>$49.90</td>
+                  <td class="col-correct">-</td>
+                  <td><span class="audit-status pending">Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div class="project-content">
-            <h3 class="project-title">Amazon Sorting Simulator</h3>
-            
-            <!-- Tech View Standard Desc -->
-            <p class="project-desc project-desc-standard">
-              A high-performance conveyor sorting simulator using Python's concurrent threading model. Implements thread-safe consumer-producer priority queues and mutual exclusion locks.
-            </p>
-            
-            <!-- Ops View Metrics -->
-            <div class="project-metrics">
-              <div class="metric-row">
-                <span class="metric-lbl">Sorting Rate</span>
-                <span class="metric-val">400+ Units/Hr</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">Sorting Precision</span>
-                <span class="metric-val">99.8% Audit</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">Simulated Scale</span>
-                <span class="metric-val">10,000 pkgs/min</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">SLA Violations</span>
-                <span class="metric-val">0 breaches</span>
-              </div>
-            </div>
-            
-            <div class="project-tags">
-              <span class="project-tag">Multithreading</span>
-              <span class="project-tag">Mutex Locks</span>
-              <span class="project-tag">Priority Queues</span>
-            </div>
-          </div>
-          <div class="project-footer">
-            <span class="project-link">
-              <i data-lucide="cpu"></i>
-              <span>Concurrent Logic</span>
-            </span>
-            <a href="projects/sorting-simulator.html" class="project-link" style="color: var(--accent-primary);">
-              <span>Details</span>
-              <i data-lucide="chevron-right"></i>
-            </a>
-          </div>
-        </div>
 
-        <!-- Project 6: Drive-Thru Queue Optimizer -->
-        <div class="glass-card project-card reveal" style="transition-delay: 150ms;">
-          <div class="project-badge">SLA Optimizer</div>
-          <div class="project-preview">
-            <div class="project-preview-icon"><i data-lucide="hourglass" style="width: 48px; height: 48px;"></i></div>
-          </div>
-          <div class="project-content">
-            <h3 class="project-title">Drive-Thru Queue Optimizer</h3>
-            
-            <!-- Tech View Standard Desc -->
-            <p class="project-desc project-desc-standard">
-              An event-driven queuing simulator built in Python modeling arrival distributions (Poisson processes) and exponential checkout services to profile bottleneck latency.
-            </p>
-            
-            <!-- Ops View Metrics -->
-            <div class="project-metrics">
-              <div class="metric-row">
-                <span class="metric-lbl">Target SLA</span>
-                <span class="metric-val">45 Seconds</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">Queue Capacity</span>
-                <span class="metric-val">120 Cars/Hr</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">POS Data-Entry</span>
-                <span class="metric-val">12 Seconds/Car</span>
-              </div>
-              <div class="metric-row">
-                <span class="metric-lbl">Lane Congestion</span>
-                <span class="metric-val">Reduced 30%</span>
+          <!-- Developer Mode View: Python Script -->
+          <div class="dev-only code-window" style="height: 100%; border: none; background: transparent; padding: 0;">
+            <div class="code-header" style="background: rgba(0, 0, 0, 0.3);">
+              <div class="code-filename">revenue_recovery.py</div>
+              <div class="terminal-buttons">
+                <span class="t-btn red"></span>
+                <span class="t-btn green"></span>
               </div>
             </div>
-            
-            <div class="project-tags">
-              <span class="project-tag">Queuing Theory</span>
-              <span class="project-tag">Poisson Arrivals</span>
-              <span class="project-tag">Event Simulator</span>
+            <div class="code-body" style="max-height: 310px; overflow-y: auto;">
+              <pre><code><span class="code-keyword">def</span> <span class="code-builtin">audit_parcel_billing</span>(length, width, height, declared_wt, billed_rate, rate_per_kg):
+    <span class="code-comment"># 1. Standard carrier dimensional divisor</span>
+    DIM_DIVISOR = <span class="code-number">5000.0</span>
+    
+    <span class="code-comment"># 2. Calculate volumetric weight (kg)</span>
+    volumetric_wt = (length * width * height) / DIM_DIVISOR
+    
+    <span class="code-comment"># 3. Determine billable weight (greater of actual vs volumetric)</span>
+    billable_wt = <span class="code-builtin">max</span>(declared_wt, volumetric_wt)
+    correct_rate = billable_wt * rate_per_kg
+    
+    <span class="code-comment"># 4. Flag discrepancies in billing structures</span>
+    discrepancy = billed_rate - correct_rate
+    <span class="code-keyword">if</span> <span class="code-builtin">abs</span>(discrepancy) &gt; <span class="code-number">0.05</span>:
+        <span class="code-keyword">return</span> {{
+            <span class="code-string">"status"</span>: <span class="code-string">"FLAGGED"</span>,
+            <span class="code-string">"volumetric_wt"</span>: <span class="code-builtin">round</span>(volumetric_wt, <span class="code-number">2</span>),
+            <span class="code-string">"correct_rate"</span>: <span class="code-builtin">round</span>(correct_rate, <span class="code-number">2</span>),
+            <span class="code-string">"leakage"</span>: <span class="code-builtin">round</span>(discrepancy, <span class="code-number">2</span>)
+        }}
+    <span class="code-keyword">return</span> {{<span class="code-string">"status"</span>: <span class="code-string">"AUDITED"</span>, <span class="code-string">"volumetric_wt"</span>: <span class="code-builtin">round</span>(volumetric_wt, <span class="code-number">2</span>), <span class="code-string">"correct_rate"</span>: <span class="code-builtin">round</span>(correct_rate, <span class="code-number">2</span>), <span class="code-string">"leakage"</span>: <span class="code-number">0.0</span>}}</code></pre>
             </div>
           </div>
-          <div class="project-footer">
-            <span class="project-link">
-              <i data-lucide="hourglass"></i>
-              <span>Statistical Sim</span>
-            </span>
-            <a href="projects/queue-optimizer.html" class="project-link" style="color: var(--accent-primary);">
-              <span>Details</span>
-              <i data-lucide="chevron-right"></i>
-            </a>
-          </div>
+
         </div>
       </div>
     </div>

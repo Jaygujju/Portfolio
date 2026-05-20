@@ -370,4 +370,194 @@ Summary:       A software engineering graduate with over 3 years
       }
     });
   });
+
+  // ========================================================
+  // 8. LOGIFLOW REVENUE RECOVERY AUDITOR SIMULATOR
+  // ========================================================
+  const btnRunAudit = document.getElementById('btnRunAudit');
+  const scannerLaserBar = document.getElementById('scannerLaserBar');
+  const auditCount = document.getElementById('auditCount');
+  const auditSavings = document.getElementById('auditSavings');
+  const auditSLA = document.getElementById('auditSLA');
+  const auditDiscrepancies = document.getElementById('auditDiscrepancies');
+  
+  const parcels = [
+    { id: 'P-109', carrier: 'UPS Express', actualWt: 4.5, l: 30, w: 20, h: 15, billed: 42.00, rate: 8.00 },
+    { id: 'P-110', carrier: 'DHL Express', actualWt: 1.2, l: 45, w: 30, h: 25, billed: 58.50, rate: 10.00 },
+    { id: 'P-111', carrier: 'FedEx Ground', actualWt: 8.0, l: 20, w: 20, h: 20, billed: 31.20, rate: 3.90 },
+    { id: 'P-112', carrier: 'UPS Standard', actualWt: 3.0, l: 50, w: 40, h: 30, billed: 48.00, rate: 4.00 },
+    { id: 'P-113', carrier: 'Canada Packers', actualWt: 12.5, l: 25, w: 25, h: 20, billed: 54.00, rate: 4.30 },
+    { id: 'P-114', carrier: 'DHL Economy', actualWt: 2.1, l: 35, w: 30, h: 20, billed: 49.90, rate: 9.50 }
+  ];
+
+  let isAuditing = false;
+
+  if (btnRunAudit) {
+    btnRunAudit.addEventListener('click', () => {
+      if (isAuditing) return;
+      isAuditing = true;
+
+      // 1. Enter active state for button
+      btnRunAudit.disabled = true;
+      const originalBtnHTML = btnRunAudit.innerHTML;
+      btnRunAudit.innerHTML = '<span>Scanning Invoices...</span><i class="animate-spin" data-lucide="loader"></i>';
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons({ attrs: { class: 'animate-spin' } });
+      }
+
+      // 2. Trigger glowing scanner laser bar sweep
+      scannerLaserBar.classList.remove('active');
+      void scannerLaserBar.offsetWidth; // Trigger reflow to restart animation
+      scannerLaserBar.classList.add('active');
+
+      // 3. Reset stats panel
+      auditCount.textContent = '0 / 6';
+      auditSavings.textContent = '$0.00';
+      auditDiscrepancies.textContent = '0';
+      auditSLA.textContent = '100.0%';
+
+      // 4. Reset table body display
+      const rows = document.querySelectorAll('#auditorTableBody tr');
+      rows.forEach(row => {
+        row.className = ''; // Remove success/flagged/auditing classes
+        const colVolumetric = row.querySelector('.col-volumetric');
+        const colCorrect = row.querySelector('.col-correct');
+        const statusTd = row.querySelector('td:last-child');
+
+        if (colVolumetric) colVolumetric.textContent = '-';
+        if (colCorrect) colCorrect.textContent = '-';
+        if (statusTd) {
+          statusTd.innerHTML = '<span class="audit-status pending">Pending</span>';
+        }
+      });
+
+      let currentScanned = 0;
+      let currentDiscrepancies = 0;
+      let currentLeakage = 0;
+
+      // Helper function to animate number tick ups
+      function animateCounter(element, start, end, duration, prefix = '', suffix = '') {
+        const startTime = performance.now();
+        function update(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const currentVal = start + progress * (end - start);
+          if (prefix === '$') {
+            element.textContent = `${prefix}${currentVal.toFixed(2)}${suffix}`;
+          } else {
+            element.textContent = `${prefix}${Math.floor(currentVal)}${suffix}`;
+          }
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            if (prefix === '$') {
+              element.textContent = `${prefix}${end.toFixed(2)}${suffix}`;
+            } else {
+              element.textContent = `${prefix}${end}${suffix}`;
+            }
+          }
+        }
+        requestAnimationFrame(update);
+      }
+
+      // 5. Staggered row-by-row scanning processing
+      parcels.forEach((parcel, index) => {
+        const row = document.querySelector(`#auditorTableBody tr[data-parcel="${parcel.id}"]`);
+        
+        // Stagger scanning start
+        setTimeout(() => {
+          if (!row) return;
+
+          // Mark row as currently scanning
+          row.classList.add('auditing-now');
+          const statusTd = row.querySelector('td:last-child');
+          if (statusTd) {
+            statusTd.innerHTML = '<span class="audit-status scanning">Scanning</span>';
+          }
+          
+          // Stagger actual audit completion (300ms after scanning starts)
+          setTimeout(() => {
+            row.classList.remove('auditing-now');
+            
+            // Volumetric Weight Calculation
+            const volumetricWt = (parcel.l * parcel.w * parcel.h) / 5000;
+            const billableWt = Math.max(parcel.actualWt, volumetricWt);
+            const correctRate = billableWt * parcel.rate;
+            const discrepancy = Math.abs(parcel.billed - correctRate);
+
+            // Update row text cells
+            const colVolumetric = row.querySelector('.col-volumetric');
+            const colCorrect = row.querySelector('.col-correct');
+            if (colVolumetric) colVolumetric.textContent = `${volumetricWt.toFixed(2)} kg`;
+            if (colCorrect) colCorrect.textContent = `$${correctRate.toFixed(2)}`;
+
+            let isFlagged = discrepancy > 0.05;
+            let rowLeakage = 0;
+
+            if (isFlagged) {
+              row.classList.add('audited-discrepancy');
+              if (statusTd) {
+                statusTd.innerHTML = '<span class="audit-status flagged"><i data-lucide="alert-triangle" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Flagged</span>';
+              }
+              currentDiscrepancies++;
+              
+              // Only count overcharges towards recovered leakage
+              if (parcel.billed > correctRate) {
+                rowLeakage = parcel.billed - correctRate;
+              }
+            } else {
+              row.classList.add('audited-success');
+              if (statusTd) {
+                statusTd.innerHTML = '<span class="audit-status success"><i data-lucide="check" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Audited</span>';
+              }
+            }
+
+            // Create Lucide Icons for dynamic row elements
+            if (typeof lucide !== 'undefined') {
+              lucide.createIcons();
+            }
+
+            // Update Stats Variables
+            currentScanned++;
+            const prevLeakage = currentLeakage;
+            currentLeakage += rowLeakage;
+
+            // Update Stats Meters
+            auditCount.textContent = `${currentScanned} / 6`;
+            animateCounter(auditDiscrepancies, parseFloat(auditDiscrepancies.textContent), currentDiscrepancies, 250);
+            
+            if (rowLeakage > 0) {
+              animateCounter(auditSavings, prevLeakage, currentLeakage, 350, '$');
+            }
+
+            // Custom SLA calculation
+            // SLA Compliance ticks up to 99.8% upon completion
+            const finalSLATarget = 99.8;
+            const currentSLATarget = 100 - ((currentDiscrepancies / 6) * 50); // intermediate mock drop that rebounds
+            if (currentScanned === 6) {
+              animateCounter(auditSLA, 90, finalSLATarget, 500, '', '%');
+            } else {
+              auditSLA.textContent = `${currentSLATarget.toFixed(1)}%`;
+            }
+
+            // Final Parcel cleanups
+            if (currentScanned === 6) {
+              setTimeout(() => {
+                scannerLaserBar.classList.remove('active');
+                btnRunAudit.disabled = false;
+                btnRunAudit.innerHTML = originalBtnHTML;
+                if (typeof lucide !== 'undefined') {
+                  lucide.createIcons();
+                }
+                isAuditing = false;
+              }, 400);
+            }
+
+          }, 300);
+
+        }, index * 350); // Stagger scanning of rows every 350ms
+      });
+    });
+  }
 });
+
