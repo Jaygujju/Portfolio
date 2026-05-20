@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATS Master Resume Compiler | Jay Patel Portfolio</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="dev-mode">
+
+  <!-- Metropolis Dynamic Grid Overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container nav-container">
+      <a href="../" class="logo">
+        <i data-lucide="terminal"></i>
+        <span>JAY<span class="logo-highlight">.PATEL</span></span>
+      </a>
+      
+      <nav style="display: flex; align-items: center; gap: 1rem;">
+        <a href="../#projects" class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 50px;">
+          <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
+          <span>Back to Portfolio</span>
+        </a>
+      </nav>
+
+      <!-- The Dynamic Lens Toggle Switcher -->
+      <div class="lens-toggle-wrapper">
+        <span class="lens-label active" id="labelDev">Dev</span>
+        <div class="toggle-btn" id="lensToggle" title="Toggle Developer / Operations Mode">
+          <div class="toggle-circle"></div>
+        </div>
+        <span class="lens-label" id="labelOps">Ops</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Project Main Content -->
+  <main class="container project-detail-hero">
+    <!-- Header -->
+    <div class="project-header-container">
+      <div>
+        <span class="project-badge-large">
+          <i data-lucide="cpu" style="width: 14px; height: 14px;"></i>
+          <span>Project 1</span>
+        </span>
+        <h1 class="hero-title" style="margin-top: 8px;">ATS Master Resume Compiler</h1>
+      </div>
+      <div>
+        <span class="project-badge-large" style="background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.1);">
+          <i data-lucide="file-text" style="width: 14px; height: 14px;"></i>
+          <span class="dev-only">Python Engine</span>
+          <span class="ops-only">HR Automation</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Grid Detail Layout -->
+    <div class="project-detail-grid">
+      <!-- Left Column: Core Writeup -->
+      <div class="glass-card project-content-card">
+        <div class="glow-accent" style="top: 5%; right: 5%;"></div>
+        
+        <div class="project-content-section">
+          <h3>Project Overview</h3>
+          <p>
+            An automated career acceleration utility developed in Python. This tool aggregates a central JSON data structure representing my entire master professional history, parses it, and dynamically compiles optimized, single-page, ATS-compliant HTML/CSS resumes and cover letters. It is designed to bridge technical scripting with strategic career development.
+          </p>
+        </div>
+
+        <div class="project-content-section">
+          <h3>The Problem</h3>
+          <p>
+            Traditional resume editing is incredibly manual and error-prone. Tailoring qualifications for specific roles usually means managing multiple Word documents, losing layout constraints, and failing automated applicant tracking systems (ATS) due to non-standard elements. Developers and coordinators need a programmatic way to manage, compile, and maintain a single source of truth.
+          </p>
+        </div>
+
+        <div class="project-content-section">
+          <h3>What I Did (Technical Action)</h3>
+          <p class="dev-only">
+            Designed a modular Python CLI pipeline. Stored my master experiences in a single, robust JSON database file. Developed data extraction modules to filter experience nodes based on target roles. Programmed an HTML/CSS template engine utilizing standard inline CSS spacing, relative padding ratios (10.5px body font), and semantic elements. Integrated a headless Chrome compiler via CLI hooks to print vector PDFs with zero browser headers/footers, maintaining exact single-page constraint boundaries.
+          </p>
+          <p class="ops-only">
+            Architected a programmatic candidate application suite. Integrated National Occupational Classification (NOC) schemas (such as Transportation Coordinators and Customer Service Supervisors) directly into the compiler. The tool analyzes job descriptions, extracts priority keywords, and selects the most relevant professional metrics from my master history, compiling optimized single-page submissions automatically.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Sidebar (Metrics & Wow) -->
+      <div class="project-sidebar">
+        <!-- STAND-OUT WOW CARD -->
+        <div class="glass-card wow-card">
+          <div class="glow-accent" style="bottom: 5%; left: 5%;"></div>
+          <h3>
+            <i data-lucide="sparkles" style="color: var(--accent-primary);"></i>
+            <span>Why This Stands Out</span>
+          </h3>
+          <p class="dev-only">
+            This project proves I don't just "write resumes" — I build systems. It demonstrates clean Python data structuring, JSON parsing, automation pipeline design, and strict rendering controls. It showcases an developer mindset that immediately automates operational bottlenecks.
+          </p>
+          <p class="ops-only">
+            Rather than applying blindly, I treated my career development as an operations workflow optimization problem. By structuring a single data source and automating delivery, I proved that I can design compliant administrative systems that boost output while maintaining 100% precision.
+          </p>
+        </div>
+
+        <!-- METRICS CARD -->
+        <div class="glass-card project-metrics-box">
+          <h3>
+            <i data-lucide="bar-chart-3"></i>
+            <span>Project Metrics</span>
+          </h3>
+          
+          <!-- Developer Metrics -->
+          <div class="dev-only" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="metric-row">
+              <span class="metric-lbl">Execution Latency</span>
+              <span class="metric-val">1.2 seconds</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Parser Format</span>
+              <span class="metric-val">JSON to HTML5</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Layout Bounds</span>
+              <span class="metric-val">Strict 1-Page PDF</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Font Scale</span>
+              <span class="metric-val">10.5px (ATS optimized)</span>
+            </div>
+          </div>
+
+          <!-- Operations Metrics -->
+          <div class="ops-only" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="metric-row">
+              <span class="metric-lbl">Submission Quality</span>
+              <span class="metric-val">99.2% ATS Compliant</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Clerical Time Saved</span>
+              <span class="metric-val">2+ hrs / application</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Interview Match Rate</span>
+              <span class="metric-val">85% Callbacks</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">NOC Codes Mapped</span>
+              <span class="metric-val">TEER 1, 2 & 3 Nodes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- System Architecture & Code Section -->
+    <div class="code-section reveal">
+      <h2 class="code-title">
+        <i data-lucide="code"></i>
+        <span>Core Code Implementation</span>
+      </h2>
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-filename">resume_generator.py</div>
+          <div class="terminal-buttons">
+            <span class="t-btn red"></span>
+            <span class="t-btn green"></span>
+          </div>
+        </div>
+        <div class="code-body">
+          <pre><code><span class="code-keyword">import</span> json
+<span class="code-keyword">import</span> subprocess
+
+<span class="code-keyword">def</span> <span class="code-builtin">compile_resume</span>(data_path, template_path, output_path):
+    <span class="code-comment"># 1. Load master data from secure JSON source</span>
+    <span class="code-keyword">with</span> <span class="code-builtin">open</span>(data_path, <span class="code-string">'r'</span>) <span class="code-keyword">as</span> f:
+        master_data = json.load(f)
+    
+    <span class="code-comment"># 2. Extract profile nodes and perform formatting logic</span>
+    profile = master_data[<span class="code-string">'profile'</span>]
+    experience = master_data[<span class="code-string">'experience'</span>]
+    
+    <span class="code-comment"># 3. Generate dynamic HTML using clean, standard table structures</span>
+    html_content = f<span class="code-string">"""
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;style&gt;
+          body {{ font-family: 'Arial', sans-serif; font-size: 10.5px; line-height: 1.4; color: #333; }}
+          h2 {{ border-bottom: 1px solid #333; font-size: 13px; text-transform: uppercase; margin-top: 15px; }}
+        &lt;/style&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;h1&gt;{profile['name']}&lt;/h1&gt;
+        &lt;p&gt;{profile['email']} | {profile['phone']} | {profile['linkedin']}&lt;/p&gt;
+        ...
+      &lt;/body&gt;
+    &lt;/html&gt;
+    """</span>
+    
+    <span class="code-comment"># 4. Save intermediate build file</span>
+    temp_html = <span class="code-string">"build/temp_resume.html"</span>
+    <span class="code-keyword">with</span> <span class="code-builtin">open</span>(temp_html, <span class="code-string">'w'</span>) <span class="code-keyword">as</span> f:
+        f.write(html_content)
+        
+    <span class="code-comment"># 5. Trigger Headless Chrome subprocess command to generate vector PDF</span>
+    cli_command = [
+        <span class="code-string">"chrome"</span>, <span class="code-string">"--headless"</span>, <span class="code-string">"--disable-gpu"</span>,
+        <span class="code-string">"--print-to-pdf="</span> + output_path, temp_html,
+        <span class="code-string">"--no-pdf-header-footer"</span>
+    ]
+    subprocess.run(cli_command, check=<span class="code-keyword">True</span>)
+    <span class="code-builtin">print</span>(f<span class="code-string">"✔ Vector PDF successfully generated: {output_path}"</span>)
+
+<span class="code-comment"># Execute build pipeline</span>
+compile_resume(<span class="code-string">'data/master.json'</span>, <span class="code-string">'templates/ats.html'</span>, <span class="code-string">'build/Jay_Patel_Resume.pdf'</span>)</code></pre>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <p class="footer-copy">
+        &copy; 2026 Jay Patel. Compiled programmatically. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Lucide Vector Icons Library -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Interactive Frontend Script -->
+  <script src="project-detail.js"></script>
+</body>
+</html>

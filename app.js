@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
       labelOps.classList.remove('active');
       
       updateHeroSection(contentMap.dev);
+      localStorage.setItem('portfolio-lens', 'dev');
     } else {
       body.classList.remove('dev-mode');
       body.classList.add('ops-mode');
@@ -81,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
       labelDev.classList.remove('active');
       
       updateHeroSection(contentMap.ops);
+      localStorage.setItem('portfolio-lens', 'ops');
     }
     
     // Refresh Lucide Icons in dynamically injected elements
@@ -88,6 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
     }
   }
+
+  // Initial Load Check from LocalStorage
+  const savedLens = localStorage.getItem('portfolio-lens') || 'dev';
+  switchLens(savedLens);
 
   function updateHeroSection(data) {
     // Inject Tag & Animate

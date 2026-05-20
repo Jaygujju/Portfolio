@@ -1259,3 +1259,190 @@ footer {
     padding: 1.5rem;
   }
 }
+
+/* ========================================================
+   PROJECT DETAIL PAGES STYLING
+   ======================================================== */
+.project-detail-hero {
+  padding-top: 140px;
+  padding-bottom: 50px;
+  position: relative;
+}
+
+.project-header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.project-badge-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(var(--accent-rgb), 0.1);
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  color: var(--accent-primary);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: var(--transition-smooth);
+}
+
+.project-detail-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+.project-content-card {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.project-content-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-content-section h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.project-content-section p {
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.project-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.wow-card {
+  padding: 2rem;
+  border-color: rgba(245, 158, 11, 0.25);
+  box-shadow: 0 8px 32px rgba(245, 158, 11, 0.04);
+}
+
+body.dev-mode .wow-card {
+  border-color: rgba(194, 89, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(194, 89, 255, 0.04);
+}
+
+.wow-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wow-card p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.project-metrics-box {
+  padding: 2rem;
+}
+
+.project-metrics-box h3 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.code-section {
+  margin-top: 4rem;
+}
+
+.code-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.code-window {
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+}
+
+.code-header {
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--glass-border);
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+}
+
+.code-filename {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.code-body {
+  background: #05070a;
+  padding: 25px;
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.code-body pre {
+  margin: 0;
+}
+
+/* Syntax Highlighting */
+.code-keyword { color: #f43f5e; font-weight: 600; }
+.code-string { color: #10b981; }
+.code-number { color: #f59e0b; }
+.code-comment { color: #64748b; font-style: italic; }
+.code-builtin { color: #00f2fe; }
+
+/* DEV MODE / OPS MODE CONDITIONAL DISPLAY */
+.dev-only, .ops-only {
+  transition: opacity 0.3s ease;
+}
+
+body.dev-mode .ops-only { display: none !important; }
+body.ops-mode .dev-only { display: none !important; }
+
+@media (max-width: 768px) {
+  .project-detail-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}

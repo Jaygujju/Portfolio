@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunshine SLA Monitor | Jay Patel Portfolio</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="dev-mode">
+
+  <!-- Metropolis Grid Overlay -->
+  <div class="grid-overlay"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav-container">
+      <a href="../" class="logo">
+        <i data-lucide="terminal"></i>
+        <span>JAY<span class="logo-highlight">.PATEL</span></span>
+      </a>
+      
+      <nav style="display: flex; align-items: center; gap: 1rem;">
+        <a href="../#projects" class="btn btn-secondary" style="padding: 6px 16px; font-size: 0.85rem; border-radius: 50px;">
+          <i data-lucide="arrow-left" style="width: 14px; height: 14px;"></i>
+          <span>Back to Portfolio</span>
+        </a>
+      </nav>
+
+      <!-- Toggle -->
+      <div class="lens-toggle-wrapper">
+        <span class="lens-label active" id="labelDev">Dev</span>
+        <div class="toggle-btn" id="lensToggle" title="Toggle Developer / Operations Mode">
+          <div class="toggle-circle"></div>
+        </div>
+        <span class="lens-label" id="labelOps">Ops</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="container project-detail-hero">
+    <div class="project-header-container">
+      <div>
+        <span class="project-badge-large">
+          <i data-lucide="cpu" style="width: 14px; height: 14px;"></i>
+          <span>Project 3</span>
+        </span>
+        <h1 class="hero-title" style="margin-top: 8px;">Sunshine SLA Monitor</h1>
+      </div>
+      <div>
+        <span class="project-badge-large" style="background: rgba(var(--accent-rgb), 0.05); border-color: rgba(var(--accent-rgb), 0.1);">
+          <i data-lucide="layout-dashboard" style="width: 14px; height: 14px;"></i>
+          <span class="dev-only">Interactive UI</span>
+          <span class="ops-only">Financial SLA Recovery</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- Grid Detail Layout -->
+    <div class="project-detail-grid">
+      <!-- Left Column: Core Writeup -->
+      <div class="glass-card project-content-card">
+        <div class="glow-accent" style="top: 5%; right: 5%;"></div>
+        
+        <div class="project-content-section">
+          <h3>Project Overview</h3>
+          <p>
+            An interactive logistics dashboard and SLA-auditing console interface. Built using pure semantic HTML5, CSS variables, and modular Vanilla JS, this tool parses shipment logs, identifies multi-carrier SLA failures, and organizes dispute claims for recovery.
+          </p>
+        </div>
+
+        <div class="project-content-section">
+          <h3>The Problem</h3>
+          <p>
+            Couriers offer guaranteed delivery times, but up to 5% of packages miss their windows. Manually auditing logs to identify these misses, verifying contract rules, and filing billing disputes for UPS, DHL, or FedEx accounts is administrative labor that businesses routinely skip, leaving thousands in unclaimed refunds.
+          </p>
+        </div>
+
+        <div class="project-content-section">
+          <h3>What I Did (Technical Action)</h3>
+          <p class="dev-only">
+            Engineered a responsive, high-performance dashboard layout utilizing modern glassmorphism styling (`backdrop-filter`). Programmed a log-processing class in JavaScript to parse mock API carrier data feeds. Configured structural state management in the front-end to calculate metrics and dynamically redraw elements when filtering by carrier or SLA status without external library overhead.
+          </p>
+          <p class="ops-only">
+            Digitized my real-world experience as Customer Experience Specialist at Sunshine Corp, where I managed courier accounts and solved 500+ delivery disputes. By structuring this administrative auditing cycle into a dashboard mockup, I demonstrate a systematic, scalable procedure to secure shipping SLA recoveries, recover billing errors, and de-escalate customer concerns.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Sidebar (Metrics & Wow) -->
+      <div class="project-sidebar">
+        <div class="glass-card wow-card">
+          <div class="glow-accent" style="bottom: 5%; left: 5%;"></div>
+          <h3>
+            <i data-lucide="sparkles" style="color: var(--accent-primary);"></i>
+            <span>Why This Stands Out</span>
+          </h3>
+          <p class="dev-only">
+            This proves layout expertise. It shows that I don't rely on massive frameworks (like React or Bootstrap) to build premium, responsive, glassmorphic interfaces. It demonstrates efficient state management and DOM manipulation in Vanilla JS.
+          </p>
+          <p class="ops-only">
+            Shows immense financial value. It proves that I don't just "resolve customer complaints" — I analyze the underlying delivery SLAs, audit shipping records, and recover real money for the business ($15,000+ saved) while ensuring 100% SLA client compliance.
+          </p>
+        </div>
+
+        <!-- METRICS CARD -->
+        <div class="glass-card project-metrics-box">
+          <h3>
+            <i data-lucide="bar-chart-3"></i>
+            <span>Project Metrics</span>
+          </h3>
+          
+          <div class="dev-only" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="metric-row">
+              <span class="metric-lbl">Interface Build</span>
+              <span class="metric-val">HTML5 & CSS3 Variables</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">State Handling</span>
+              <span class="metric-val">Modular ES6 Classes</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Reflow Latency</span>
+              <span class="metric-val">Sub-10 milliseconds</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Layout Widths</span>
+              <span class="metric-val">Fluid (Mobile to 4K)</span>
+            </div>
+          </div>
+
+          <div class="ops-only" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div class="metric-row">
+              <span class="metric-lbl">Disputes Audited</span>
+              <span class="metric-val">500+ Actual Cases</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Dispute Success Rate</span>
+              <span class="metric-val">98% Recovered</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Direct Cost Recovery</span>
+              <span class="metric-val">$15,000+ Refunded</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-lbl">Daily Logs Audited</span>
+              <span class="metric-val">10,000+ entries</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code Section -->
+    <div class="code-section reveal">
+      <h2 class="code-title">
+        <i data-lucide="code"></i>
+        <span>Dispute Log Parser</span>
+      </h2>
+      <div class="code-window">
+        <div class="code-header">
+          <div class="code-filename">sla_parser.js</div>
+          <div class="terminal-buttons">
+            <span class="t-btn red"></span>
+            <span class="t-btn green"></span>
+          </div>
+        </div>
+        <div class="code-body">
+          <pre><code><span class="code-keyword">class</span> <span class="code-builtin">SLADisputeAuditor</span> {
+  <span class="code-keyword">constructor</span>(logs) {
+    <span class="code-keyword">this</span>.logs = logs;
+    <span class="code-keyword">this</span>.failedSLAs = [];
+  }
+
+  <span class="code-comment">// Process courier log feeds and identify breach conditions</span>
+  <span class="code-builtin">auditLogs</span>() {
+    <span class="code-keyword">this</span>.logs.forEach(log => {
+      <span class="code-keyword">const</span> actualHours = (new Date(log.delivered_time) - new Date(log.ship_time)) / <span class="code-number">3600000</span>;
+      
+      <span class="code-comment">// Check if delivery duration exceeds the SLA contract hours</span>
+      <span class="code-keyword">if</span> (actualHours &gt; log.contract_sla_hours) {
+        <span class="code-keyword">const</span> delayHours = actualHours - log.contract_sla_hours;
+        
+        <span class="code-keyword">this</span>.failedSLAs.push({
+          tracking_id: log.tracking_id,
+          carrier: log.carrier,
+          customer_dispute: log.customer_complaint_logged,
+          refunding_value: log.shipping_fee * <span class="code-number">1.0</span>, <span class="code-comment">// Full refund SLA breach</span>
+          delay: delayHours.toFixed(<span class="code-number">2</span>) + <span class="code-string">" hrs"</span>
+        });
+      }
+    });
+    <span class="code-keyword">return</span> <span class="code-keyword">this</span>.failedSLAs;
+  }
+
+  <span class="code-comment">// Output summary statistics for management review</span>
+  <span class="code-builtin">getFinancialSummary</span>() {
+    <span class="code-keyword">let</span> totalRefundPotential = <span class="code-number">0</span>;
+    <span class="code-keyword">this</span>.failedSLAs.forEach(item =&gt; {
+      totalRefundPotential += item.refunding_value;
+    });
+    
+    <span class="code-keyword">return</span> {
+      breaches_found: <span class="code-keyword">this</span>.failedSLAs.length,
+      potential_recovery: <span class="code-string">"$"</span> + totalRefundPotential.toFixed(<span class="code-number">2</span>)
+    };
+  }
+}
+
+<span class="code-comment">// Sample logs parsed dynamically</span>
+<span class="code-keyword">const</span> sampleLogs = [
+  { tracking_id: <span class="code-string">"1Z9A"</span>, carrier: <span class="code-string">"UPS"</span>, ship_time: <span class="code-string">"2026-05-18T10:00:00"</span>, delivered_time: <span class="code-string">"2026-05-19T18:00:00"</span>, contract_sla_hours: <span class="code-number">24</span>, shipping_fee: <span class="code-number">150.00</span>, customer_complaint_logged: <span class="code-keyword">true</span> }
+];
+
+<span class="code-keyword">const</span> auditor = <span class="code-keyword">new</span> <span class="code-builtin">SLADisputeAuditor</span>(sampleLogs);
+auditor.auditLogs();
+<span class="code-builtin">console</span>.log(auditor.getFinancialSummary());</code></pre>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <p class="footer-copy">
+        &copy; 2026 Jay Patel. Monitored programmatically. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="project-detail.js"></script>
+</body>
+</html>
