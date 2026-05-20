@@ -502,6 +502,11 @@ Summary:       A software engineering graduate with over 3 years
       const card = document.getElementById(`card-${index}`);
       if (!card) return;
 
+      // Clear inline overrides so CSS stylesheet rules take over for active & routed items
+      card.style.left = '';
+      card.style.transform = '';
+      card.style.opacity = '';
+
       card.className = 'package-card';
       
       if (index === currentPkgIndex) {
