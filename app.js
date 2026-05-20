@@ -322,7 +322,7 @@ Summary:       A software engineering graduate with over 3 years
         return;
       }
 
-      // Enter simulated loading state
+      // Enter loading state
       btnSubmitForm.disabled = true;
       const originalBtnHTML = btnSubmitForm.innerHTML;
       btnSubmitForm.innerHTML = '<span>Processing Dispatch...</span><i class="animate-spin" data-lucide="loader"></i>';
@@ -330,22 +330,56 @@ Summary:       A software engineering graduate with over 3 years
         lucide.createIcons({ attrs: { class: 'animate-spin' } });
       }
 
-      // Simulate API network call
-      setTimeout(() => {
-        // Reset button
+      // Retrieve Web3Forms keys from the form elements
+      const accessKey = contactForm.querySelector('input[name="access_key"]').value;
+      const botcheck = contactForm.querySelector('input[name="botcheck"]').checked;
+      const fromName = contactForm.querySelector('input[name="from_name"]').value;
+      const subjectVal = contactForm.querySelector('input[name="subject"]').value;
+
+      // Real API network call via fetch
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: name,
+          email: email,
+          subject: subjectVal,
+          from_name: fromName,
+          custom_subject: subject,
+          message: message,
+          botcheck: botcheck
+        })
+      })
+      .then(async (response) => {
+        const json = await response.json();
         btnSubmitForm.disabled = false;
         btnSubmitForm.innerHTML = originalBtnHTML;
         if (typeof lucide !== 'undefined') {
           lucide.createIcons();
         }
 
-        // Show Success status
-        formStatus.innerHTML = `📬 <strong>Success!</strong> Delivery accepted. Thank you, ${name}! Your inquiry has been routed to Jay's account. He will reach out shortly.`;
-        formStatus.className = 'form-status success';
-        
-        // Reset form inputs
-        contactForm.reset();
-      }, 1500);
+        if (response.status === 200) {
+          formStatus.innerHTML = `📬 <strong>Success!</strong> Message sent! Thank you, ${name}. Jay has received your inquiry at jaynpatel08@gmail.com and will reach out shortly.`;
+          formStatus.className = 'form-status success';
+          contactForm.reset();
+        } else {
+          formStatus.innerHTML = `❌ <strong>Submission Failed:</strong> ${json.message || 'Error occurred.'}`;
+          formStatus.className = 'form-status error';
+        }
+      })
+      .catch((error) => {
+        btnSubmitForm.disabled = false;
+        btnSubmitForm.innerHTML = originalBtnHTML;
+        if (typeof lucide !== 'undefined') {
+          lucide.createIcons();
+        }
+        formStatus.innerHTML = `❌ <strong>Network Error:</strong> Unable to connect to submission server. Please try again.`;
+        formStatus.className = 'form-status error';
+      });
     });
   }
 
@@ -375,6 +409,7 @@ Summary:       A software engineering graduate with over 3 years
   // 8. LOGIFLOW REVENUE RECOVERY AUDITOR SIMULATOR
   // ========================================================
   const btnRunAudit = document.getElementById('btnRunAudit');
+  const btnAuditCustom = document.getElementById('btnAuditCustom');
   const scannerLaserBar = document.getElementById('scannerLaserBar');
   const auditCount = document.getElementById('auditCount');
   const auditSavings = document.getElementById('auditSavings');
@@ -391,6 +426,32 @@ Summary:       A software engineering graduate with over 3 years
   ];
 
   let isAuditing = false;
+  let customParcelIdCounter = 115;
+
+  // Global helper function to animate number tick ups
+  function animateCounter(element, start, end, duration, prefix = '', suffix = '') {
+    const startTime = performance.now();
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const currentVal = start + progress * (end - start);
+      if (prefix === '$') {
+        element.textContent = `${prefix}${currentVal.toFixed(2)}${suffix}`;
+      } else {
+        element.textContent = `${prefix}${Math.floor(currentVal)}${suffix}`;
+      }
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        if (prefix === '$') {
+          element.textContent = `${prefix}${end.toFixed(2)}${suffix}`;
+        } else {
+          element.textContent = `${prefix}${end}${suffix}`;
+        }
+      }
+    }
+    requestAnimationFrame(update);
+  }
 
   if (btnRunAudit) {
     btnRunAudit.addEventListener('click', () => {
@@ -399,6 +460,7 @@ Summary:       A software engineering graduate with over 3 years
 
       // 1. Enter active state for button
       btnRunAudit.disabled = true;
+      if (btnAuditCustom) btnAuditCustom.disabled = true;
       const originalBtnHTML = btnRunAudit.innerHTML;
       btnRunAudit.innerHTML = '<span>Scanning Invoices...</span><i class="animate-spin" data-lucide="loader"></i>';
       if (typeof lucide !== 'undefined') {
@@ -406,12 +468,14 @@ Summary:       A software engineering graduate with over 3 years
       }
 
       // 2. Trigger glowing scanner laser bar sweep
-      scannerLaserBar.classList.remove('active');
-      void scannerLaserBar.offsetWidth; // Trigger reflow to restart animation
-      scannerLaserBar.classList.add('active');
+      if (scannerLaserBar) {
+        scannerLaserBar.classList.remove('active');
+        void scannerLaserBar.offsetWidth; // Trigger reflow to restart animation
+        scannerLaserBar.classList.add('active');
+      }
 
       // 3. Reset stats panel
-      auditCount.textContent = '0 / 6';
+      auditCount.textContent = `0 / ${parcels.length}`;
       auditSavings.textContent = '$0.00';
       auditDiscrepancies.textContent = '0';
       auditSLA.textContent = '100.0%';
@@ -434,31 +498,6 @@ Summary:       A software engineering graduate with over 3 years
       let currentScanned = 0;
       let currentDiscrepancies = 0;
       let currentLeakage = 0;
-
-      // Helper function to animate number tick ups
-      function animateCounter(element, start, end, duration, prefix = '', suffix = '') {
-        const startTime = performance.now();
-        function update(currentTime) {
-          const elapsed = currentTime - startTime;
-          const progress = Math.min(elapsed / duration, 1);
-          const currentVal = start + progress * (end - start);
-          if (prefix === '$') {
-            element.textContent = `${prefix}${currentVal.toFixed(2)}${suffix}`;
-          } else {
-            element.textContent = `${prefix}${Math.floor(currentVal)}${suffix}`;
-          }
-          if (progress < 1) {
-            requestAnimationFrame(update);
-          } else {
-            if (prefix === '$') {
-              element.textContent = `${prefix}${end.toFixed(2)}${suffix}`;
-            } else {
-              element.textContent = `${prefix}${end}${suffix}`;
-            }
-          }
-        }
-        requestAnimationFrame(update);
-      }
 
       // 5. Staggered row-by-row scanning processing
       parcels.forEach((parcel, index) => {
@@ -512,6 +551,10 @@ Summary:       A software engineering graduate with over 3 years
               }
             }
 
+            // Cache calculations on the row element for global recount
+            row.setAttribute('data-leakage', rowLeakage);
+            row.setAttribute('data-discrepancy', isFlagged ? '1' : '0');
+
             // Create Lucide Icons for dynamic row elements
             if (typeof lucide !== 'undefined') {
               lucide.createIcons();
@@ -523,7 +566,7 @@ Summary:       A software engineering graduate with over 3 years
             currentLeakage += rowLeakage;
 
             // Update Stats Meters
-            auditCount.textContent = `${currentScanned} / 6`;
+            auditCount.textContent = `${currentScanned} / ${parcels.length}`;
             animateCounter(auditDiscrepancies, parseFloat(auditDiscrepancies.textContent), currentDiscrepancies, 250);
             
             if (rowLeakage > 0) {
@@ -531,20 +574,19 @@ Summary:       A software engineering graduate with over 3 years
             }
 
             // Custom SLA calculation
-            // SLA Compliance ticks up to 99.8% upon completion
-            const finalSLATarget = 99.8;
-            const currentSLATarget = 100 - ((currentDiscrepancies / 6) * 50); // intermediate mock drop that rebounds
-            if (currentScanned === 6) {
-              animateCounter(auditSLA, 90, finalSLATarget, 500, '', '%');
+            const finalSLATarget = 100 - ((currentDiscrepancies / parcels.length) * 15);
+            if (currentScanned === parcels.length) {
+              animateCounter(auditSLA, parseFloat((auditSLA.textContent || '100%').replace('%', '')), Math.max(70.0, finalSLATarget), 500, '', '%');
             } else {
-              auditSLA.textContent = `${currentSLATarget.toFixed(1)}%`;
+              auditSLA.textContent = `${(100 - ((currentDiscrepancies / currentScanned) * 15)).toFixed(1)}%`;
             }
 
             // Final Parcel cleanups
-            if (currentScanned === 6) {
+            if (currentScanned === parcels.length) {
               setTimeout(() => {
-                scannerLaserBar.classList.remove('active');
+                if (scannerLaserBar) scannerLaserBar.classList.remove('active');
                 btnRunAudit.disabled = false;
+                if (btnAuditCustom) btnAuditCustom.disabled = false;
                 btnRunAudit.innerHTML = originalBtnHTML;
                 if (typeof lucide !== 'undefined') {
                   lucide.createIcons();
@@ -557,6 +599,177 @@ Summary:       A software engineering graduate with over 3 years
 
         }, index * 350); // Stagger scanning of rows every 350ms
       });
+    });
+  }
+
+  // 9. AUDIT CUSTOM SHIPMENT FORM
+  if (btnAuditCustom) {
+    btnAuditCustom.addEventListener('click', () => {
+      if (isAuditing) return;
+
+      const carrier = document.getElementById('inputCarrier').value;
+      const billed = parseFloat(document.getElementById('inputBilled').value);
+      const actualWt = parseFloat(document.getElementById('inputActualWt').value);
+      const rate = parseFloat(document.getElementById('inputRatePerKg').value);
+      const l = parseInt(document.getElementById('inputL').value);
+      const w = parseInt(document.getElementById('inputW').value);
+      const h = parseInt(document.getElementById('inputH').value);
+
+      if (!carrier || isNaN(billed) || isNaN(actualWt) || isNaN(rate) || isNaN(l) || isNaN(w) || isNaN(h)) {
+        alert('Please fill out all fields with valid numbers before auditing.');
+        return;
+      }
+      if (billed <= 0 || actualWt <= 0 || rate <= 0 || l <= 0 || w <= 0 || h <= 0) {
+        alert('All dimensional, weight, and pricing parameters must be positive numbers.');
+        return;
+      }
+
+      isAuditing = true;
+
+      // Enter loading state for buttons
+      btnAuditCustom.disabled = true;
+      if (btnRunAudit) btnRunAudit.disabled = true;
+
+      const originalCustomBtnHTML = btnAuditCustom.innerHTML;
+      btnAuditCustom.innerHTML = '<span>Auditing...</span><i class="animate-spin" data-lucide="loader"></i>';
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons({ attrs: { class: 'animate-spin' } });
+      }
+
+      // Generate a unique ID and push to parcels array
+      const parcelId = `P-${customParcelIdCounter++}`;
+      const newParcel = {
+        id: parcelId,
+        carrier: carrier,
+        actualWt: actualWt,
+        l: l,
+        w: w,
+        h: h,
+        billed: billed,
+        rate: rate
+      };
+      parcels.push(newParcel);
+
+      // Prepend a new row to the table body
+      const newRowHTML = `
+        <tr data-parcel="${parcelId}">
+          <td>${parcelId}</td>
+          <td>${newParcel.carrier}</td>
+          <td>${newParcel.actualWt.toFixed(1)} kg</td>
+          <td>${newParcel.l} x ${newParcel.w} x ${newParcel.h}</td>
+          <td class="col-volumetric">-</td>
+          <td>$${newParcel.billed.toFixed(2)}</td>
+          <td class="col-correct">-</td>
+          <td><span class="audit-status pending">Pending</span></td>
+        </tr>
+      `;
+      const tableBody = document.getElementById('auditorTableBody');
+      if (tableBody) {
+        tableBody.insertAdjacentHTML('afterbegin', newRowHTML);
+      }
+
+      // Trigger glowing scanner laser bar sweep
+      if (scannerLaserBar) {
+        scannerLaserBar.classList.remove('active');
+        void scannerLaserBar.offsetWidth; // Reflow
+        scannerLaserBar.classList.add('active');
+      }
+
+      // Audit specific row after short delay
+      setTimeout(() => {
+        const row = document.querySelector(`#auditorTableBody tr[data-parcel="${parcelId}"]`);
+        if (!row) return;
+
+        // Mark as scanning
+        row.classList.add('auditing-now');
+        const statusTd = row.querySelector('td:last-child');
+        if (statusTd) {
+          statusTd.innerHTML = '<span class="audit-status scanning">Scanning</span>';
+        }
+
+        setTimeout(() => {
+          row.classList.remove('auditing-now');
+
+          // Calculations
+          const volumetricWt = (newParcel.l * newParcel.w * newParcel.h) / 5000;
+          const billableWt = Math.max(newParcel.actualWt, volumetricWt);
+          const correctRate = billableWt * newParcel.rate;
+          const discrepancy = Math.abs(newParcel.billed - correctRate);
+
+          // Update text cells
+          const colVolumetric = row.querySelector('.col-volumetric');
+          const colCorrect = row.querySelector('.col-correct');
+          if (colVolumetric) colVolumetric.textContent = `${volumetricWt.toFixed(2)} kg`;
+          if (colCorrect) colCorrect.textContent = `$${correctRate.toFixed(2)}`;
+
+          let isFlagged = discrepancy > 0.05;
+          let rowLeakage = 0;
+
+          if (isFlagged) {
+            row.classList.add('audited-discrepancy');
+            if (statusTd) {
+              statusTd.innerHTML = '<span class="audit-status flagged"><i data-lucide="alert-triangle" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Flagged</span>';
+            }
+            if (newParcel.billed > correctRate) {
+              rowLeakage = newParcel.billed - correctRate;
+            }
+          } else {
+            row.classList.add('audited-success');
+            if (statusTd) {
+              statusTd.innerHTML = '<span class="audit-status success"><i data-lucide="check" style="width:12px;height:12px;display:inline-block;margin-right:4px;vertical-align:middle;"></i>Audited</span>';
+            }
+          }
+
+          // Cache calculations on the row element for global recount
+          row.setAttribute('data-leakage', rowLeakage);
+          row.setAttribute('data-discrepancy', isFlagged ? '1' : '0');
+
+          if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+          }
+
+          // Recount total stats from all rows
+          const allRows = document.querySelectorAll('#auditorTableBody tr');
+          let auditedCount = 0;
+          let discrepancyCount = 0;
+          let totalLeakage = 0;
+
+          allRows.forEach(r => {
+            if (r.classList.contains('audited-success') || r.classList.contains('audited-discrepancy')) {
+              auditedCount++;
+              const leak = parseFloat(r.getAttribute('data-leakage') || '0');
+              const disc = parseInt(r.getAttribute('data-discrepancy') || '0');
+              totalLeakage += leak;
+              discrepancyCount += disc;
+            }
+          });
+
+          // Update stats panel
+          auditCount.textContent = `${auditedCount} / ${allRows.length}`;
+          animateCounter(auditDiscrepancies, parseFloat(auditDiscrepancies.textContent || '0'), discrepancyCount, 250);
+          animateCounter(auditSavings, parseFloat((auditSavings.textContent || '$0.00').replace('$', '')), totalLeakage, 350, '$');
+
+          // SLA target calculation
+          const finalSLATarget = auditedCount === 0 ? 100.0 : Math.max(70.0, 100.0 - (discrepancyCount / auditedCount) * 15.0);
+          animateCounter(auditSLA, parseFloat((auditSLA.textContent || '100%').replace('%', '')), finalSLATarget, 500, '', '%');
+
+          // Clean up buttons
+          setTimeout(() => {
+            if (scannerLaserBar) scannerLaserBar.classList.remove('active');
+            btnAuditCustom.disabled = false;
+            btnAuditCustom.innerHTML = originalCustomBtnHTML;
+            if (btnRunAudit) {
+              btnRunAudit.disabled = false;
+            }
+            if (typeof lucide !== 'undefined') {
+              lucide.createIcons();
+            }
+            isAuditing = false;
+          }, 400);
+
+        }, 300);
+
+      }, 600);
     });
   }
 });
