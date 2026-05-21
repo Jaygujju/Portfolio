@@ -31,8 +31,8 @@
         <span>JAY<span class="logo-highlight">.PATEL</span></span>
       </a>
       
-      <nav>
-        <ul class="nav-links">
+      <nav id="navbar">
+        <ul class="nav-links" id="navLinks">
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#skills">Skills</a></li>
@@ -45,11 +45,18 @@
       <!-- The Dynamic Lens Toggle Switcher -->
       <div class="lens-toggle-wrapper">
         <span class="lens-label active" id="labelDev">Dev</span>
-        <div class="toggle-btn" id="lensToggle" title="Toggle Developer / Operations Mode">
+        <div class="toggle-btn" id="lensToggle" role="switch" aria-checked="false" aria-label="Toggle Developer or Operations Mode Theme" tabindex="0" title="Toggle Developer / Operations Mode">
           <div class="toggle-circle"></div>
         </div>
         <span class="lens-label" id="labelOps">Ops</span>
       </div>
+
+      <!-- Hamburger Toggle for Mobile Devices -->
+      <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </div>
   </header>
 
@@ -106,9 +113,10 @@ Available Commands: help, about, skills, contact, clear
             
             <!-- Dynamic Prompt Line -->
             <div class="terminal-prompt-line">
-              <span class="terminal-prompt-sym">patel-os ~ $</span>
-              <input type="text" class="terminal-input" id="terminalInput" placeholder="type a command..." autocomplete="off" spellcheck="false">
+              <span class="terminal-prompt-sym" id="terminalPromptSym">patel-os ~ $</span>
+              <input type="text" class="terminal-input" id="terminalInput" placeholder="type a command..." autocomplete="off" spellcheck="false" aria-label="Terminal CLI command input" aria-describedby="terminalInstructions">
             </div>
+            <span id="terminalInstructions" class="sr-only" style="display:none;">Type help to list available commands. Suggestion chips are available below.</span>
 
             <!-- Quick Suggestions Tags -->
             <div class="terminal-suggestions">

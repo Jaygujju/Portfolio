@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const stat4Lbl = document.getElementById('stat4Lbl');
   
   const footerNexusWord = document.getElementById('footerNexusWord');
+  const terminalPromptSym = document.getElementById('terminalPromptSym');
 
   // Core content maps for Developer vs. Operations Lens
   const contentMap = {
@@ -66,12 +67,38 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Mobile Navigation Toggle
+  const mobileNavToggle = document.getElementById('mobileNavToggle');
+  const navLinksList = document.getElementById('navLinks');
+  
+  if (mobileNavToggle && navLinksList) {
+    mobileNavToggle.addEventListener('click', () => {
+      const expanded = mobileNavToggle.getAttribute('aria-expanded') === 'true' || false;
+      mobileNavToggle.setAttribute('aria-expanded', !expanded);
+      navLinksList.classList.toggle('active');
+      mobileNavToggle.classList.toggle('active');
+    });
+
+    // Close mobile menu when links are clicked
+    const links = navLinksList.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+        navLinksList.classList.remove('active');
+        mobileNavToggle.classList.remove('active');
+      });
+    });
+  }
+
   function switchLens(mode) {
-    if (mode === 'dev') {
+    const isDev = (mode === 'dev');
+    if (isDev) {
       body.classList.remove('ops-mode');
       body.classList.add('dev-mode');
       labelDev.classList.add('active');
       labelOps.classList.remove('active');
+      if (lensToggle) lensToggle.setAttribute('aria-checked', 'false');
+      if (terminalPromptSym) terminalPromptSym.innerHTML = 'patel-os ~ $';
       
       updateHeroSection(contentMap.dev);
       localStorage.setItem('portfolio-lens', 'dev');
@@ -80,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
       body.classList.add('ops-mode');
       labelOps.classList.add('active');
       labelDev.classList.remove('active');
+      if (lensToggle) lensToggle.setAttribute('aria-checked', 'true');
+      if (terminalPromptSym) terminalPromptSym.innerHTML = 'dispatch-ops ~ #';
       
       updateHeroSection(contentMap.ops);
       localStorage.setItem('portfolio-lens', 'ops');
@@ -94,6 +123,33 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initial Load Check from LocalStorage
   const savedLens = localStorage.getItem('portfolio-lens') || 'dev';
   switchLens(savedLens);
+
+  // Click Trigger for Toggle Switch
+  if (lensToggle) {
+    lensToggle.addEventListener('click', () => {
+      if (body.classList.contains('dev-mode')) {
+        switchLens('ops');
+      } else {
+        switchLens('dev');
+      }
+    });
+
+    // Keyboard support for accessibility
+    lensToggle.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (body.classList.contains('dev-mode')) {
+          switchLens('ops');
+        } else {
+          switchLens('dev');
+        }
+      }
+    });
+  }
+
+  // Label Click Triggers
+  labelDev.addEventListener('click', () => switchLens('dev'));
+  labelOps.addEventListener('click', () => switchLens('ops'));
 
   function updateHeroSection(data) {
     // Inject Tag & Animate
@@ -122,19 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
     footerNexusWord.textContent = data.footerWord;
   }
 
-  // Click Trigger for Toggle Switch
-  lensToggle.addEventListener('click', () => {
-    if (body.classList.contains('dev-mode')) {
-      switchLens('ops');
-    } else {
-      switchLens('dev');
-    }
-  });
-
-  // Label Click Triggers
-  labelDev.addEventListener('click', () => switchLens('dev'));
-  labelOps.addEventListener('click', () => switchLens('ops'));
-
 
   // 3. INTERACTIVE PATEL TERMINAL ENGINE
   const terminalInput = document.getElementById('terminalInput');
@@ -143,32 +186,69 @@ document.addEventListener('DOMContentLoaded', () => {
   const chips = document.querySelectorAll('.terminal-chip');
 
   const terminalCommands = {
-    help: () => `
+    help: (isOps) => isOps ? `
 Available commands:
-  <span style="color: var(--accent-secondary);">about</span>     - Summarize Jay Patel's professional history
-  <span style="color: var(--accent-secondary);">skills</span>    - Output technical & operations skills folder tree
+  <span style="color: var(--accent-secondary);">about</span>     - Summarize Jay Patel's logistics profile
+  <span style="color: var(--accent-secondary);">skills</span>    - Output operational competency tree
+  <span style="color: var(--accent-secondary);">contact</span>   - Print direct dispatch lines & socials
+  <span style="color: var(--accent-secondary);">mode</span>      - Change theme lens (Syntax: 'mode dev' or 'mode ops')
+  <span style="color: var(--accent-secondary);">clear</span>     - Wipe terminal logs
+  <span style="color: var(--accent-secondary);">help</span>      - Print this listing
+    ` : `
+Available commands:
+  <span style="color: var(--accent-secondary);">about</span>     - Summarize Jay Patel's programming profile
+  <span style="color: var(--accent-secondary);">skills</span>    - Output software engineering directory tree
   <span style="color: var(--accent-secondary);">contact</span>   - Print direct contact methods & socials
   <span style="color: var(--accent-secondary);">mode</span>      - Change lens (Syntax: 'mode dev' or 'mode ops')
   <span style="color: var(--accent-secondary);">clear</span>     - Wipe terminal logs
   <span style="color: var(--accent-secondary);">help</span>      - Print this listing
     `,
-    about: () => `
-<span style="color: var(--text-primary); font-weight: bold;">JAY PATEL - CORE PROFILE</span>
+    about: (isOps) => isOps ? `
+<span style="color: var(--text-primary); font-weight: bold;">JAY PATEL - OUTBOUND & SLA DISPATCH PROFILE</span>
+---------------------------------------------------
+Active Station: Toronto, Ontario, Canada
+Certifications: Outbound Conveyor SOP Compliant
+               99.8% Scanner Precision Score (Amazon Hub)
+Focus Area:    SLA Execution, Multi-Carrier Coordinator
+               Complete Mart Store Manager & Logistics Lead
+CEC Status:     Eligible for PR (Implied PGWP Status active)
+Summary:       A high-throughput logistics coordinator with over
+               3 years of fast-paced physical sorting, courier
+               dispute negotiation, and U-Haul fleet management.
+               Infuses database structural principles to eradicate
+               SLA delivery gaps and fleet delays.
+---------------------------------------------------
+    ` : `
+<span style="color: var(--text-primary); font-weight: bold;">JAY PATEL - SOFTWARE ENGINEERING PROFILE</span>
 ---------------------------------------------------
 Location:      Toronto, Ontario, Canada
 Education:     Diploma in Computer Programming
                (Seneca Polytechnic, Dec 2025)
 Focus Area:    Relational Databases, Python Automation,
-               SLA Optimization & Logistics Coordinator
+               Algorithmic Systems & OOP Architectures
 Status:        Implied Work Status (PGWP applied, 3 yr duration)
 Summary:       A software engineering graduate with over 3 years
-               of direct warehouse sorting, fleet leasing, and 
-               SLA escalation resolutions. Expert in building 
-               automated pipelines that connect digital scripts 
-               with physical workflows.
+               of direct database programming, CLI tool compilation,
+               and script optimizations. Specialized in bridging
+               data-driven structures with complex physical workflows.
 ---------------------------------------------------
     `,
-    skills: () => `
+    skills: (isOps) => isOps ? `
+<span style="color: var(--text-primary); font-weight: bold;">LOGISTICS COMPETENCY TREE</span>
+---------------------------------------------------
+📂 <span style="color: var(--accent-primary);">ops-competencies/</span>
+ ├── 📁 <span style="color: var(--accent-secondary);">fulfillment-depot/</span>
+ │    ├── 📦 Outbound Sorting Speed (400 pkgs/hr) [95%]
+ │    ├── ⚡ Scanning Systems (Amazon Internal)    [90%]
+ │    └── 🛡️ OSHA Site Safety Protocols          [90%]
+ ├── 📁 <span style="color: var(--accent-secondary);">courier-sla/</span>
+ │    ├── 🚚 DHL, FedEx & UPS Account Coordination [95%]
+ │    └── 📝 Custom SLA Shipping Formulations     [90%]
+ └── 📁 <span style="color: var(--accent-secondary);">store-operations/</span>
+      ├── 🤝 Account Dispute Resolution (500+ Cases) [95%]
+      └── 🗃️ SKU Database Lifecycle (500+ SKUs)   [90%]
+---------------------------------------------------
+    ` : `
 <span style="color: var(--text-primary); font-weight: bold;">SKILLS MATRIX FOLDER TREE</span>
 ---------------------------------------------------
 📂 <span style="color: var(--accent-primary);">skills/</span>
@@ -177,16 +257,20 @@ Summary:       A software engineering graduate with over 3 years
  │    ├── 🗄️ SQL & Databases (Relational design) [85%]
  │    ├── 📊 Algorithms & Data Structures       [80%]
  │    └── 🌐 HTML / CSS / Vanilla JS            [75%]
- ├── 📁 <span style="color: var(--accent-secondary);">logistics-operations/</span>
- │    ├── 📦 Courier SLA (UPS, FedEx, DHL)     [95%]
- │    ├── 🚚 Fleet rental & dispatch layouts   [85%]
- │    └── ⚡ Amazon Sortation (400 units/hr)    [90%]
- └── 📁 <span style="color: var(--accent-secondary);">customer-success/</span>
-      ├── 🤝 Escalation dispute recovery       [95%]
-      └── ☕ POS & front-desk throughput        [90%]
+ └── 📁 <span style="color: var(--accent-secondary);">applied-tech/</span>
+      ├── 🤖 Playwright Scripting (Headless Chrome) [85%]
+      └── ⚙️ CLI Systems & Automation Pipelines    [90%]
 ---------------------------------------------------
     `,
-    contact: () => `
+    contact: (isOps) => isOps ? `
+<span style="color: var(--text-primary); font-weight: bold;">DISPATCH DIRECTORIES</span>
+---------------------------------------------------
+📧 Dispatch Email: <a href="mailto:jaynpatel08@gmail.com" style="color: var(--accent-primary);">jaynpatel08@gmail.com</a>
+📞 Hotline:        <a href="tel:+14379813545" style="color: var(--accent-primary);">437-981-3545</a>
+📍 Location:       Toronto, Ontario, Canada
+🔗 LinkedIn Comm:  <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" style="color: var(--accent-primary);">linkedin.com/in/jaygujju/</a>
+---------------------------------------------------
+    ` : `
 <span style="color: var(--text-primary); font-weight: bold;">DIRECT DIRECTORIES</span>
 ---------------------------------------------------
 📧 Email:     <a href="mailto:jaynpatel08@gmail.com" style="color: var(--accent-primary);">jaynpatel08@gmail.com</a>
@@ -201,11 +285,13 @@ Summary:       A software engineering graduate with over 3 years
     const rawCmd = cmdString.trim().toLowerCase();
     const args = rawCmd.split(' ');
     const primaryCmd = args[0];
+    const isOps = body.classList.contains('ops-mode');
+    const promptSym = isOps ? 'dispatch-ops ~ #' : 'patel-os ~ $';
     
     // 1. Create a styled reflection line
     const reflectionLine = document.createElement('div');
     reflectionLine.className = 'terminal-log-line';
-    reflectionLine.innerHTML = `<span class="terminal-prompt-sym">patel-os ~ $</span> <span style="color: var(--text-primary);">${cmdString}</span>`;
+    reflectionLine.innerHTML = `<span class="terminal-prompt-sym">${promptSym}</span> <span style="color: var(--text-primary);">${cmdString}</span>`;
     terminalOutputLog.appendChild(reflectionLine);
     
     // 2. Build Response
@@ -230,7 +316,7 @@ Summary:       A software engineering graduate with over 3 years
         responseEl.innerHTML = '<span style="color: #ef4444;">✗ Error: Invalid mode argument. Use "mode dev" or "mode ops".</span>';
       }
     } else if (terminalCommands[primaryCmd]) {
-      responseEl.innerHTML = terminalCommands[primaryCmd]();
+      responseEl.innerHTML = terminalCommands[primaryCmd](isOps);
     } else if (primaryCmd === '') {
       responseEl.innerHTML = ''; // Do nothing on empty enter
     } else {
