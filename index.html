@@ -4,26 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Primary SEO Metadata -->
+  <!-- seo metadata -->
   <title>Jay Patel | Computer Programmer & Operations Specialist</title>
   <meta name="description" content="Portfolio of Jay Patel. Discover a unique intersection of Computer Programming (Seneca Polytechnic) and high-throughput warehouse logistics, retail management, and customer success experience.">
   <meta name="keywords" content="Jay Patel, Portfolio, Computer Programmer, Logistics Coordinator, Seneca College, Amazon Sorting, Sunshine Corp Customer Success, Toronto Developer">
   <meta name="author" content="Jay Patel">
   
-  <!-- Open Graph / Facebook -->
+  <!-- open graph metadata -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Jay Patel | Computer Programmer & Operations Specialist">
   <meta property="og:description" content="Portfolio of Jay Patel, showcasing Seneca Computer Programming skills combined with high-throughput logistics, shipping coordination, and retail management.">
   
-  <!-- Styling Foundation -->
+  <!-- main stylesheet -->
   <link rel="stylesheet" href="styles.css?v=2.2">
 </head>
-<body class="dev-mode"> <!-- Defaults to Developer Mode -->
+<body class="dev-mode"> <!-- defaults to developer mode -->
 
-  <!-- Metropolis Dynamic Grid Overlay -->
+  <!-- dynamic background grid overlay -->
   <div class="grid-overlay"></div>
 
-  <!-- Header & Navigation -->
+  <!-- navigation header -->
   <header>
     <div class="container nav-container">
       <a href="#" class="logo" id="navLogo">
@@ -42,7 +42,7 @@
         </ul>
       </nav>
 
-      <!-- The Dynamic Lens Toggle Switcher -->
+      <!-- theme lens toggle switcher -->
       <div class="lens-toggle-wrapper">
         <span class="lens-label active" id="labelDev">Dev</span>
         <div class="toggle-btn" id="lensToggle" role="switch" aria-checked="false" aria-label="Toggle Developer or Operations Mode Theme" tabindex="0" title="Toggle Developer / Operations Mode">
@@ -51,7 +51,7 @@
         <span class="lens-label" id="labelOps">Ops</span>
       </div>
 
-      <!-- Hamburger Toggle for Mobile Devices -->
+      <!-- mobile nav hamburger toggle -->
       <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
         <span class="hamburger-line"></span>
         <span class="hamburger-line"></span>
@@ -60,10 +60,10 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
+  <!-- hero section -->
   <section id="hero" class="hero">
     <div class="container hero-layout">
-      <!-- Info Col -->
+      <!-- intro and profile details -->
       <div class="hero-info reveal">
         <div class="hero-tag" id="heroTag">
           <i data-lucide="code-2"></i>
@@ -74,7 +74,7 @@
           <span class="title-mode" id="heroTitleMode">Computer Programmer</span>
         </h1>
         <p class="hero-desc" id="heroDesc">
-          Seneca Polytechnic Programming graduate specializing in Python, SQL, and database algorithms. Creating streamlined technical answers to bridge the gap between software development and complex operational systems.
+          Seneca Polytechnic Computer Programming graduate specializing in Python automation, relational databases, and data structures. Building clean technical solutions that bridge the gap between software systems and real-world logistics workflows.
         </p>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary" id="heroMainAction">
@@ -85,7 +85,7 @@
         </div>
       </div>
       
-      <!-- Patel Terminal Col -->
+      <!-- terminal interface emulator -->
       <div class="terminal-wrapper reveal" style="transition-delay: 150ms;">
         <div class="terminal-box">
           <div class="terminal-header">
@@ -108,17 +108,17 @@ Available Commands: help, about, skills, contact, clear
             </div>
             <div class="terminal-log-line">Type 'help' below or click a quick tag to start.</div>
             
-            <!-- Output Log Container -->
+            <!-- terminal display output log -->
             <div id="terminalOutputLog"></div>
             
-            <!-- Dynamic Prompt Line -->
+            <!-- command entry prompt line -->
             <div class="terminal-prompt-line">
               <span class="terminal-prompt-sym" id="terminalPromptSym">patel-os ~ $</span>
               <input type="text" class="terminal-input" id="terminalInput" placeholder="type a command..." autocomplete="off" spellcheck="false" aria-label="Terminal CLI command input" aria-describedby="terminalInstructions">
             </div>
             <span id="terminalInstructions" class="sr-only" style="display:none;">Type help to list available commands. Suggestion chips are available below.</span>
 
-            <!-- Quick Suggestions Tags -->
+            <!-- suggestion tags chip wrapper -->
             <div class="terminal-suggestions">
               <span class="terminal-chip" data-cmd="about">about</span>
               <span class="terminal-chip" data-cmd="skills">skills</span>
@@ -131,30 +131,30 @@ Available Commands: help, about, skills, contact, clear
     </div>
   </section>
 
-  <!-- About Section -->
+  <!-- about section -->
   <section id="about">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-subtitle">Profile</span>
-        <h2 class="section-title">The Nexus of Tech & Operations</h2>
-        <p>Combining computer science logic with front-line high-throughput fulfillment, client account escalations, and store operations.</p>
+        <h2 class="section-title">Where Logic Meets Logistics</h2>
+        <p>Applying computer programming principles to streamline inventory, logistics accounts, and retail operations.</p>
       </div>
       
       <div class="about-grid">
         <div class="about-text reveal">
-          <h3 id="aboutHeading">I build software that drives real-world throughput.</h3>
+          <h3 id="aboutHeading">I build software to automate real-world workflows.</h3>
           <p id="aboutTextContent">
-            With a Computer Programming Diploma from Seneca Polytechnic, I developed a strong foundation in algorithmic reasoning, database structures, and object-oriented architectures. Unlike traditional developers, I spent years leading operations at Complete Mart, managing high-volume sorting at Amazon, and coordinating courier accounts (UPS, FedEx, DHL) for Sunshine Corporation. I thrive where operational workflows meet technological automation.
+            I graduated from Seneca Polytechnic with a Computer Programming diploma, gaining a solid foundation in database design, data structures, and Python automation scripting. Outside of programming, I have managed retail centers and shipping hubs across the GTA, handling courier accounts (UPS, FedEx, DHL), coordinating fleet logistics, and sorting high-volume shipments under strict operational timelines. I write clean, logical code to solve practical logistics and workflow problems.
           </p>
           <div style="margin-top: 1rem;">
             <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" class="btn btn-secondary" style="border-radius: 50px;">
-              <i data-lucide="linkedin"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" style="width: 18px; height: 18px; display: inline-block; vertical-align: middle; margin-right: 8px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
               <span>View LinkedIn Profile</span>
             </a>
           </div>
         </div>
         
-        <!-- Stats Dashboard -->
+        <!-- stats dashboard cards -->
         <div class="about-stats reveal" style="transition-delay: 150ms;">
           <div class="glass-card stat-card">
             <div class="glow-accent" style="top: 10%; left: 10%;"></div>
@@ -181,17 +181,17 @@ Available Commands: help, about, skills, contact, clear
     </div>
   </section>
 
-  <!-- Skills Matrix Section -->
+  <!-- skills matrix section -->
   <section id="skills" style="background: rgba(0, 0, 0, 0.15);">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-subtitle">Competencies</span>
-        <h2 class="section-title">Professional Skill Matrix</h2>
-        <p>A breakdown of technical engineering capabilities paired with physical operations and customer service expertises.</p>
+        <h2 class="section-title">Skills & Expertise</h2>
+        <p>A breakdown of programming languages, tools, and operational experience.</p>
       </div>
       
       <div class="skills-grid">
-        <!-- Category 1: Tech -->
+        <!-- software engineering category -->
         <div class="glass-card skills-category reveal">
           <div class="glow-accent"></div>
           <div class="skills-category-header">
@@ -240,7 +240,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Category 2: Logistics -->
+        <!-- logistics & operations category -->
         <div class="glass-card skills-category reveal" style="transition-delay: 100ms;">
           <div class="glow-accent"></div>
           <div class="skills-category-header">
@@ -289,7 +289,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Category 3: Customer Success -->
+        <!-- customer success category -->
         <div class="glass-card skills-category reveal" style="transition-delay: 200ms;">
           <div class="glow-accent"></div>
           <div class="skills-category-header">
@@ -341,17 +341,17 @@ Available Commands: help, about, skills, contact, clear
     </div>
   </section>
 
-  <!-- Experience Timeline Section -->
+  <!-- experience timeline section -->
   <section id="experience">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-subtitle">Milestones</span>
-        <h2 class="section-title">Professional Journey</h2>
+        <h2 class="section-title">My Journey</h2>
         <p>A timeline mapping out academic success along with operations positions in Canada.</p>
       </div>
       
       <div class="timeline">
-        <!-- Item 1: Tim Hortons -->
+        <!-- tim hortons timeline item -->
         <div class="timeline-item left reveal">
           <div class="timeline-dot"></div>
           <div class="glass-card timeline-content">
@@ -364,7 +364,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Item 2: Amazon -->
+        <!-- amazon sorting hub timeline item -->
         <div class="timeline-item right reveal">
           <div class="timeline-dot"></div>
           <div class="glass-card timeline-content">
@@ -377,7 +377,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Item 3: Seneca College -->
+        <!-- seneca polytechnic timeline item -->
         <div class="timeline-item left reveal">
           <div class="timeline-dot"></div>
           <div class="glass-card timeline-content">
@@ -390,7 +390,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Item 4: Complete Mart / Sunshine Corp -->
+        <!-- sunshine & complete mart timeline item -->
         <div class="timeline-item right reveal">
           <div class="timeline-dot"></div>
           <div class="glass-card timeline-content">
@@ -403,7 +403,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Item 5: Dundas Variety Store -->
+        <!-- dundas variety timeline item -->
         <div class="timeline-item left reveal">
           <div class="timeline-dot"></div>
           <div class="glass-card timeline-content">
@@ -419,17 +419,17 @@ Available Commands: help, about, skills, contact, clear
     </div>
   </section>
 
-  <!-- Projects Section -->
+  <!-- projects section -->
   <section id="projects" style="background: rgba(0, 0, 0, 0.155);">
     <div class="container">
       <div class="section-header reveal">
         <span class="section-subtitle">Showcase</span>
-        <h2 class="section-title">Innovative Case Studies</h2>
-        <p>Explore specialized projects built to bridge digital algorithms with physical operational systems.</p>
+        <h2 class="section-title">Selected Projects</h2>
+        <p>A collection of programs and tools built to bridge digital logic with hands-on operational systems.</p>
       </div>
       
       <div class="projects-grid">
-        <!-- Project 1: ATS Resume Generator -->
+        <!-- project card: ats resume generator -->
         <div class="glass-card project-card reveal">
           <div class="project-badge">Active Engine</div>
           <div class="project-preview">
@@ -438,12 +438,12 @@ Available Commands: help, about, skills, contact, clear
           <div class="project-content">
             <h3 class="project-title">ATS Master Resume Compiler</h3>
             
-            <!-- Tech View Standard Desc -->
+            <!-- developer lens standard project description -->
             <p class="project-desc project-desc-standard">
-              A Python-based compiler that dynamically aggregates raw JSON profile schemas and parses them into perfectly formatted, ATS-compliant HTML/CSS templates, compiling them into vector PDFs using headless Chrome layers.
+              A Python CLI tool that parses custom JSON resume data and compiles it into clean, ATS-friendly HTML/CSS and PDF layouts using headless Chrome.
             </p>
             
-            <!-- Ops View Metrics -->
+            <!-- operations lens metrics breakdown -->
             <div class="project-metrics">
               <div class="metric-row">
                 <span class="metric-lbl">Target Format</span>
@@ -481,7 +481,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Project 2: LogiFlow Tracker -->
+        <!-- project card: route automator -->
         <div class="glass-card project-card reveal" style="transition-delay: 100ms;">
           <div class="project-badge">Optimizing</div>
           <div class="project-preview">
@@ -490,12 +490,12 @@ Available Commands: help, about, skills, contact, clear
           <div class="project-content">
             <h3 class="project-title">LogiFlow Route Automator</h3>
             
-            <!-- Tech View Standard Desc -->
+            <!-- developer lens standard project description -->
             <p class="project-desc project-desc-standard">
-              An algorithmic routing pipeline designed to optimize package delivery flows. Implements custom sorting algorithms to classify shipments by courier weight-threshold levels and automatically rids delivery discrepancies.
+              A Python-based logistics tool that automates package routing. It classifies shipments by weight thresholds, validates delivery rules, and outputs optimized courier dispatches.
             </p>
             
-            <!-- Ops View Metrics -->
+            <!-- operations lens metrics breakdown -->
             <div class="project-metrics">
               <div class="metric-row">
                 <span class="metric-lbl">Sorting Rate</span>
@@ -533,7 +533,7 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Project 3: Courier SLA Dashboard -->
+        <!-- project card: sla monitor dashboard -->
         <div class="glass-card project-card reveal" style="transition-delay: 200ms;">
           <div class="project-badge">Simulated</div>
           <div class="project-preview">
@@ -542,12 +542,12 @@ Available Commands: help, about, skills, contact, clear
           <div class="project-content">
             <h3 class="project-title">Sunshine SLA Monitor</h3>
             
-            <!-- Tech View Standard Desc -->
+            <!-- developer lens standard project description -->
             <p class="project-desc project-desc-standard">
-              A responsive, high-performance logistics dashboard interface. Connects simulated API logs of delivery accounts and visualizes real-time courier fulfillment performance, tracking dispute claims dynamically.
+              A real-time logistics dashboard that visualizes carrier performance, tracks delivery logs, and manages courier dispute records.
             </p>
             
-            <!-- Ops View Metrics -->
+            <!-- operations lens metrics breakdown -->
             <div class="project-metrics">
               <div class="metric-row">
                 <span class="metric-lbl">Disputes Tracked</span>
@@ -589,7 +589,7 @@ Available Commands: help, about, skills, contact, clear
     </div>
   </section>
 
-  <!-- Operations Hub Section -->
+  <!-- operations hub section -->
   <section id="operations-hub" class="operations-hub-section" style="background: rgba(0, 0, 0, 0.2);">
     <div class="container">
       <div class="section-header reveal">
@@ -599,7 +599,7 @@ Available Commands: help, about, skills, contact, clear
       </div>
 
       <div class="operations-hub-layout reveal">
-        <!-- Control Panel Widget -->
+        <!-- control panel widget -->
         <div class="glass-card auditor-control-panel">
           <div class="glow-accent" style="top: 10%; left: 10%;"></div>
           <h3>Sortation Dashboard</h3>
@@ -664,14 +664,14 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
 
-        <!-- Terminal / Table Screen -->
+        <!-- terminal / table screen -->
         <div class="glass-card auditor-screen-card" id="conveyorScreenCard">
           <div class="glow-accent" style="bottom: 10%; right: 10%;"></div>
           
-          <!-- Operations Mode View: Conveyor Belt Sort UI -->
+          <!-- operations mode view: conveyor belt sort ui -->
           <div class="ops-only conveyor-game-container" id="conveyorGameContainer" style="width: 100%; height: 100%; display: flex; flex-direction: column; position: relative; padding: 0;">
             
-            <!-- Game Overlays: Start Screen -->
+            <!-- game overlays: start screen -->
             <div class="game-overlay-screen" id="gameStartOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,7,10,0.92); z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; box-sizing: border-box;">
               <div class="g-overlay-logo" style="margin-bottom: 1rem; color: var(--accent-primary);"><i data-lucide="package" style="width: 48px; height: 48px;"></i></div>
               <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; letter-spacing: -0.5px;">Outbound Sortation Shift</h3>
@@ -684,13 +684,13 @@ Available Commands: help, about, skills, contact, clear
               </button>
             </div>
 
-            <!-- Game Overlays: End Screen -->
+            <!-- game overlays: end screen -->
             <div class="game-overlay-screen" id="gameEndOverlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,7,10,0.95); z-index: 50; display: none; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; box-sizing: border-box;">
               <div class="g-overlay-logo" style="margin-bottom: 0.8rem; color: #10b981;"><i data-lucide="clipboard-check" style="width: 44px; height: 44px;"></i></div>
               <h3 style="font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; margin-bottom: 0.2rem; letter-spacing: -0.5px;">Shift Report Card</h3>
               <p style="color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.2rem;">Amazon Fulfillment Station Outbound Audit</p>
               
-              <!-- Report stats card -->
+              <!-- report stats card -->
               <div class="report-card-dashboard" style="background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border); padding: 16px; border-radius: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; width: 100%; max-width: 380px; margin-bottom: 1.5rem;">
                 <div class="report-stat">
                   <span style="font-size: 0.7rem; color: var(--text-secondary); text-transform: uppercase; display: block; margin-bottom: 2px;">Your SLA</span>
@@ -712,10 +712,10 @@ Available Commands: help, about, skills, contact, clear
               </button>
             </div>
 
-            <!-- Active Gameplay Conveyor Belt Area -->
+            <!-- active gameplay conveyor belt area -->
             <div class="conveyor-game-track" style="flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; background: radial-gradient(circle at 50% 50%, rgba(13, 20, 32, 0.4) 0%, rgba(5, 7, 10, 0.9) 100%); min-height: 250px;">
               
-              <!-- Receptor Bins / Gates (Air Left, Ground Right) -->
+              <!-- receptor bins / gates (air left, ground right) -->
               <div class="gate-receptor receptor-left" id="receptorLeft">
                 <span class="receptor-label">Air Lane</span>
               </div>
@@ -723,22 +723,22 @@ Available Commands: help, about, skills, contact, clear
                 <span class="receptor-label">Ground Lane</span>
               </div>
 
-              <!-- Conveyor Belt Line representation -->
+              <!-- conveyor belt line representation -->
               <div class="conveyor-belt-line" id="conveyorBeltLine"></div>
 
-              <!-- Scanning laser Zone box in the center -->
+              <!-- scanning laser zone box in the center -->
               <div class="scanning-bracket" id="scanningBracket">
                 <div class="scanning-laser-line"></div>
               </div>
 
-              <!-- Live Queue Container for packages sliding -->
+              <!-- live queue container for packages sliding -->
               <div class="packages-queue-container" id="packagesQueueContainer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden;">
-                <!-- Package cards injected here by JS -->
+                <!-- package cards injected here by JS -->
               </div>
               
             </div>
 
-            <!-- Mini HUD for current scanned item details -->
+            <!-- mini hud for current scanned item details -->
             <div class="scan-hud-bar" style="height: 60px; background: rgba(0, 0, 0, 0.6); border-top: 1px solid var(--glass-border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; font-family: var(--font-mono); font-size: 0.75rem;">
               <div class="scan-hud-col">
                 <span style="color: var(--text-muted); text-transform: uppercase; font-size: 0.65rem; display: block; margin-bottom: 2px;">Item Code</span>
@@ -760,7 +760,7 @@ Available Commands: help, about, skills, contact, clear
 
           </div>
 
-          <!-- Developer Mode View: Python Script package_router.py -->
+          <!-- developer mode view: python script package_router.py -->
           <div class="dev-only code-window" style="height: 100%; border: none; background: transparent; padding: 0;">
             <div class="code-header" style="background: rgba(0, 0, 0, 0.3);">
               <div class="code-filename">package_router.py</div>
@@ -805,7 +805,7 @@ Available Commands: help, about, skills, contact, clear
     </div>
   </section>
 
-  <!-- Contact Section -->
+  <!-- contact section -->
   <section id="contact">
     <div class="container">
       <div class="section-header reveal">
@@ -815,7 +815,7 @@ Available Commands: help, about, skills, contact, clear
       </div>
       
       <div class="contact-layout">
-        <!-- Details -->
+        <!-- contact details -->
         <div class="contact-info reveal">
           <h3>Contact Details</h3>
           <p style="color: var(--text-secondary); line-height: 1.6;">
@@ -848,7 +848,7 @@ Available Commands: help, about, skills, contact, clear
           
           <div class="social-links">
             <a href="https://www.linkedin.com/in/jaygujju/" target="_blank" rel="noopener" class="social-icon" title="LinkedIn Profile">
-              <i data-lucide="linkedin"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin" style="width: 20px; height: 20px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
             </a>
             <a href="mailto:jaynpatel08@gmail.com" class="social-icon" title="Send Email">
               <i data-lucide="mail"></i>
@@ -856,12 +856,12 @@ Available Commands: help, about, skills, contact, clear
           </div>
         </div>
         
-        <!-- Form Card -->
+        <!-- contact form card -->
         <div class="glass-card contact-form reveal" style="transition-delay: 150ms;">
           <div class="glow-accent" style="bottom: 10%; right: 10%;"></div>
           
           <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-            <!-- Web3Forms Integration Details -->
+            <!-- web3forms integration details -->
             <input type="hidden" name="access_key" value="0d391c25-ab8f-4d71-b9fc-e0536950185e">
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
             <input type="hidden" name="subject" value="New Portfolio Message from jaygujju.live">
@@ -888,7 +888,7 @@ Available Commands: help, about, skills, contact, clear
               <textarea name="message" id="frmMessage" class="form-input" placeholder="Your message here..." required></textarea>
             </div>
             
-            <!-- Submit Notification System -->
+            <!-- submit notification system -->
             <div id="formStatus" class="form-status" style="margin-top: 1rem;"></div>
             
             <button type="submit" class="btn btn-primary" style="margin-top: 1.5rem; width: 100%; justify-content: center;" id="btnSubmitForm">
@@ -901,7 +901,7 @@ Available Commands: help, about, skills, contact, clear
     </div>
   </section>
 
-  <!-- Footer -->
+  <!-- footer -->
   <footer>
     <div class="container footer-content">
       <div class="logo">
@@ -909,15 +909,15 @@ Available Commands: help, about, skills, contact, clear
         <span>JAY<span class="logo-highlight">.PATEL</span></span>
       </div>
       <p class="footer-copy">
-        &copy; 2026 Jay Patel. Crafted at the nexus of <span id="footerNexusWord">Software Engineering</span>. All rights reserved.
+        &copy; 2026 Jay Patel. Handcrafted with focus on <span id="footerNexusWord">Software Engineering</span>. All rights reserved.
       </p>
     </div>
   </footer>
 
-  <!-- Lucide Vector Icons Library -->
+  <!-- lucide vector icons library -->
   <script src="https://unpkg.com/lucide@latest"></script>
   
-  <!-- Interactive Frontend Script -->
+  <!-- interactive frontend script -->
   <script src="app.js?v=2.2"></script>
 </body>
 </html>
